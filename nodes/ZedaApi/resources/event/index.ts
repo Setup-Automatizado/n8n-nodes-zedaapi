@@ -89,7 +89,7 @@ export const eventDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'name',
+				property: 'event.name',
 			},
 		},
 	},
@@ -99,7 +99,7 @@ export const eventDescription: INodeProperties[] = [
 		type: 'dateTime',
 		default: '',
 		required: true,
-		description: 'Event date and time',
+		description: 'Event date and time in ISO 8601 format',
 		displayOptions: {
 			show: {
 				resource: ['event'],
@@ -109,7 +109,7 @@ export const eventDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'dateTime',
+				property: 'event.dateTime',
 			},
 		},
 	},
@@ -128,7 +128,7 @@ export const eventDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'description',
+				property: 'event.description',
 			},
 		},
 	},
@@ -147,7 +147,7 @@ export const eventDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'locationName',
+				property: 'event.location.name',
 			},
 		},
 	},
@@ -166,7 +166,7 @@ export const eventDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'degreesLatitude',
+				property: 'event.location.degreesLatitude',
 			},
 		},
 	},
@@ -185,16 +185,20 @@ export const eventDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'degreesLongitude',
+				property: 'event.location.degreesLongitude',
 			},
 		},
 	},
 	{
 		displayName: 'Call Link Type',
 		name: 'callLinkType',
-		type: 'string',
-		default: '',
-		description: 'Type of call link (e.g. voice, video)',
+		type: 'options',
+		options: [
+			{ name: 'Video', value: 'video' },
+			{ name: 'Voice', value: 'voice' },
+		],
+		default: 'voice',
+		description: 'Type of call link for the event',
 		displayOptions: {
 			show: {
 				resource: ['event'],
@@ -204,7 +208,7 @@ export const eventDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'callLinkType',
+				property: 'event.callLinkType',
 			},
 		},
 	},
@@ -223,7 +227,7 @@ export const eventDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'canceled',
+				property: 'event.canceled',
 			},
 		},
 	},
@@ -344,11 +348,11 @@ export const eventDescription: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Date Time',
-		name: 'dateTime',
+		displayName: 'Start Time',
+		name: 'startTime',
 		type: 'dateTime',
 		default: '',
-		description: 'Updated event date and time',
+		description: 'Updated start time in RFC3339 format',
 		displayOptions: {
 			show: {
 				resource: ['event'],
@@ -358,16 +362,16 @@ export const eventDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'dateTime',
+				property: 'startTime',
 			},
 		},
 	},
 	{
-		displayName: 'Location Name',
-		name: 'locationName',
-		type: 'string',
+		displayName: 'End Time',
+		name: 'endTime',
+		type: 'dateTime',
 		default: '',
-		description: 'Name of the event location',
+		description: 'Updated end time in RFC3339 format',
 		displayOptions: {
 			show: {
 				resource: ['event'],
@@ -377,7 +381,26 @@ export const eventDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'locationName',
+				property: 'endTime',
+			},
+		},
+	},
+	{
+		displayName: 'Location',
+		name: 'location',
+		type: 'string',
+		default: '',
+		description: 'Updated event location',
+		displayOptions: {
+			show: {
+				resource: ['event'],
+				operation: ['editEvent'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'location',
 			},
 		},
 	},

@@ -136,7 +136,7 @@ export const interactiveMessageDescription: INodeProperties[] = [
 			send: { type: 'body', property: 'delayMessage' },
 		},
 	},
-	// Delay Typing (all operations)
+	// Delay Typing (operations that support it per OpenAPI)
 	{
 		displayName: 'Delay Typing (Seconds)',
 		name: 'delayTyping',
@@ -147,7 +147,6 @@ export const interactiveMessageDescription: INodeProperties[] = [
 			show: {
 				resource: ['interactiveMessage'],
 				operation: [
-					'sendButtonActions',
 					'sendButtonList',
 					'sendButtonOtp',
 					'sendButtonPix',
@@ -281,7 +280,7 @@ export const interactiveMessageDescription: INodeProperties[] = [
 	},
 	{
 		displayName: 'Buttons',
-		name: 'buttonList',
+		name: 'buttons',
 		type: 'fixedCollection',
 		typeOptions: {
 			multipleValues: true,
@@ -297,7 +296,7 @@ export const interactiveMessageDescription: INodeProperties[] = [
 		options: [
 			{
 				displayName: 'Button',
-				name: 'buttons',
+				name: 'buttonValues',
 				values: [
 					{
 						displayName: 'ID',
@@ -307,11 +306,12 @@ export const interactiveMessageDescription: INodeProperties[] = [
 						required: true,
 					},
 					{
-						displayName: 'Label',
-						name: 'label',
+						displayName: 'Title',
+						name: 'title',
 						type: 'string',
 						default: '',
 						required: true,
+						description: 'Button display text (max 20 characters)',
 					},
 				],
 			},
@@ -319,7 +319,7 @@ export const interactiveMessageDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'buttonList',
+				property: 'buttons',
 			},
 		},
 	},
@@ -381,43 +381,6 @@ export const interactiveMessageDescription: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Document',
-		name: 'document',
-		type: 'string',
-		default: '',
-		description: 'Document URL or base64',
-		displayOptions: {
-			show: {
-				resource: ['interactiveMessage'],
-				operation: ['sendButtonActions'],
-			},
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'document',
-			},
-		},
-	},
-	{
-		displayName: 'Document Filename',
-		name: 'documentFilename',
-		type: 'string',
-		default: '',
-		displayOptions: {
-			show: {
-				resource: ['interactiveMessage'],
-				operation: ['sendButtonActions'],
-			},
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'documentFilename',
-			},
-		},
-	},
-	{
 		displayName: 'Image',
 		name: 'image',
 		type: 'string',
@@ -437,27 +400,8 @@ export const interactiveMessageDescription: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Video',
-		name: 'video',
-		type: 'string',
-		default: '',
-		description: 'Video URL or base64',
-		displayOptions: {
-			show: {
-				resource: ['interactiveMessage'],
-				operation: ['sendButtonActions'],
-			},
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'video',
-			},
-		},
-	},
-	{
 		displayName: 'Buttons',
-		name: 'buttonActions',
+		name: 'buttons',
 		type: 'fixedCollection',
 		typeOptions: {
 			multipleValues: true,
@@ -472,7 +416,7 @@ export const interactiveMessageDescription: INodeProperties[] = [
 		options: [
 			{
 				displayName: 'Button',
-				name: 'buttons',
+				name: 'buttonValues',
 				values: [
 					{
 						displayName: 'Copy Code',
@@ -548,7 +492,7 @@ export const interactiveMessageDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'buttonActions',
+				property: 'buttons',
 			},
 		},
 	},
@@ -630,7 +574,7 @@ export const interactiveMessageDescription: INodeProperties[] = [
 	},
 	{
 		displayName: 'Sections',
-		name: 'optionList',
+		name: 'sections',
 		type: 'fixedCollection',
 		typeOptions: {
 			multipleValues: true,
@@ -645,7 +589,7 @@ export const interactiveMessageDescription: INodeProperties[] = [
 		options: [
 			{
 				displayName: 'Section',
-				name: 'sections',
+				name: 'sectionValues',
 				values: [
 					{
 						displayName: 'Title',
@@ -697,7 +641,7 @@ export const interactiveMessageDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'optionList',
+				property: 'sections',
 			},
 		},
 	},
@@ -820,42 +764,6 @@ export const interactiveMessageDescription: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'amount',
-			},
-		},
-	},
-	{
-		displayName: 'Title',
-		name: 'title',
-		type: 'string',
-		default: '',
-		displayOptions: {
-			show: {
-				resource: ['interactiveMessage'],
-				operation: ['sendButtonPix'],
-			},
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'title',
-			},
-		},
-	},
-	{
-		displayName: 'Footer',
-		name: 'footer',
-		type: 'string',
-		default: '',
-		displayOptions: {
-			show: {
-				resource: ['interactiveMessage'],
-				operation: ['sendButtonPix'],
-			},
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'footer',
 			},
 		},
 	},
@@ -1083,23 +991,6 @@ export const interactiveMessageDescription: INodeProperties[] = [
 						type: 'string',
 						default: '',
 						description: 'Card header text',
-					},
-					{
-						displayName: 'Media Base64',
-						name: 'mediaBase64',
-						type: 'string',
-						default: '',
-						description: 'Base64 encoded media (alternative to mediaUrl)',
-					},
-					{
-						displayName: 'Media Type',
-						name: 'mediaType',
-						type: 'options',
-						options: [
-							{ name: 'Image', value: 'image' },
-							{ name: 'Video', value: 'video' },
-						],
-						default: 'image',
 					},
 					{
 						displayName: 'Media URL',

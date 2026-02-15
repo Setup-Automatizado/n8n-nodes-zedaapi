@@ -200,8 +200,8 @@ export const pollDescription: INodeProperties[] = [
 
 	// --- Send Poll Vote ---
 	{
-		displayName: 'Poll ID',
-		name: 'pollId',
+		displayName: 'Poll Message ID',
+		name: 'pollMessageId',
 		type: 'string',
 		default: '',
 		required: true,
@@ -215,27 +215,7 @@ export const pollDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'pollId',
-			},
-		},
-	},
-	{
-		displayName: 'Poll Sender',
-		name: 'pollSender',
-		type: 'string',
-		default: '',
-		required: true,
-		description: 'Phone number of who created the poll',
-		displayOptions: {
-			show: {
-				resource: ['poll'],
-				operation: ['sendPollVote'],
-			},
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'pollSender',
+				property: 'pollMessageId',
 			},
 		},
 	},

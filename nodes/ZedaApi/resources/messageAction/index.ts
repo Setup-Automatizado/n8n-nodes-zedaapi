@@ -124,7 +124,7 @@ export const messageActionDescription: INodeProperties[] = [
 		},
 	},
 
-	// Message ID (shared by most operations — excludes readMessage which uses messageIds)
+	// Message ID (shared by most operations — excludes readMessage and pinMessage)
 	{
 		displayName: 'Message ID',
 		name: 'messageId',
@@ -135,13 +135,7 @@ export const messageActionDescription: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['messageAction'],
-				operation: [
-					'sendReaction',
-					'removeReaction',
-					'forwardMessage',
-					'deleteMessage',
-					'pinMessage',
-				],
+				operation: ['sendReaction', 'removeReaction', 'forwardMessage', 'deleteMessage'],
 			},
 		},
 		routing: {
@@ -175,35 +169,14 @@ export const messageActionDescription: INodeProperties[] = [
 		},
 	},
 
-	// --- Sender field for sendReaction, removeReaction, pinMessage ---
-	{
-		displayName: 'Sender',
-		name: 'sender',
-		type: 'string',
-		default: '',
-		description: 'Sender phone number (required for group messages)',
-		displayOptions: {
-			show: {
-				resource: ['messageAction'],
-				operation: ['sendReaction', 'removeReaction', 'pinMessage'],
-			},
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'sender',
-			},
-		},
-	},
-
 	// --- Forward Message ---
 	{
-		displayName: 'Source Chat',
-		name: 'sourceChat',
+		displayName: 'From Phone',
+		name: 'fromPhone',
 		type: 'string',
 		default: '',
 		required: true,
-		description: 'Source chat JID where the original message is',
+		description: 'Source chat phone number or JID where the original message is',
 		displayOptions: {
 			show: {
 				resource: ['messageAction'],
@@ -213,7 +186,7 @@ export const messageActionDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'sourceChat',
+				property: 'fromPhone',
 			},
 		},
 	},
@@ -255,6 +228,25 @@ export const messageActionDescription: INodeProperties[] = [
 			},
 		},
 	},
+	{
+		displayName: 'Delay Typing (Seconds)',
+		name: 'delayTyping',
+		type: 'number',
+		default: 0,
+		description: 'Show typing indicator for this many seconds before forwarding',
+		displayOptions: {
+			show: {
+				resource: ['messageAction'],
+				operation: ['forwardMessage'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'delayTyping',
+			},
+		},
+	},
 
 	// --- Read Message ---
 	{
@@ -275,25 +267,6 @@ export const messageActionDescription: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'messageIds',
-			},
-		},
-	},
-	{
-		displayName: 'Sender',
-		name: 'sender',
-		type: 'string',
-		default: '',
-		description: 'Sender phone number (required for group messages)',
-		displayOptions: {
-			show: {
-				resource: ['messageAction'],
-				operation: ['readMessage'],
-			},
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'sender',
 			},
 		},
 	},
