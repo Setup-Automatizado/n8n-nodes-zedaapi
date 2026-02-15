@@ -54,6 +54,7 @@
 		],
 		"nodes": [
 			"dist/nodes/ZedaApi/ZedaApi.node.js",
+			"dist/nodes/ZedaApi/ZedaApiChatTrigger.node.js",
 			"dist/nodes/ZedaApi/ZedaApiSendAndWait.node.js",
 			"dist/nodes/ZedaApi/ZedaApiTrigger.node.js"
 		]
