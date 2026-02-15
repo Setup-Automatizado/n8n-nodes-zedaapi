@@ -9,7 +9,7 @@ import type {
 export class ZedaApi implements ICredentialType {
 	name = 'zedaApi';
 
-	displayName = 'Zeda API';
+	displayName = 'Zé Da API';
 
 	icon: Icon = { light: 'file:../icons/zedaapi.svg', dark: 'file:../icons/zedaapi.dark.svg' };
 
@@ -22,15 +22,17 @@ export class ZedaApi implements ICredentialType {
 			type: 'string',
 			default: 'http://localhost:8080',
 			placeholder: 'e.g. https://api.zedaapi.com',
-			description: 'The base URL of your Zeda API instance',
+			description:
+				'The base URL of your Zé da API server (not the dashboard URL). This is the direct API endpoint.',
 		},
 		{
 			displayName: 'Instance ID',
 			name: 'instanceId',
 			type: 'string',
 			default: '',
-			placeholder: 'e.g. 550e8400-e29b-41d4-a716-446655440000',
-			description: 'The UUID of your WhatsApp instance',
+			placeholder: 'e.g. 403679c1-ab53-4210-8981-6e4485068be3',
+			description:
+				'The UUID that identifies your WhatsApp instance. This is NOT the token — find it in your dashboard instance list.',
 		},
 		{
 			displayName: 'Instance Token',
@@ -38,7 +40,9 @@ export class ZedaApi implements ICredentialType {
 			type: 'string',
 			typeOptions: { password: true },
 			default: '',
-			description: 'The authentication token for your instance',
+			placeholder: 'e.g. f7fc72aa-b7c2-4a81-a0e8-b9cbad955f43',
+			description:
+				'The per-instance authentication token. This is different from the Instance ID — find it in your instance settings.',
 		},
 		{
 			displayName: 'Client Token',
@@ -47,7 +51,7 @@ export class ZedaApi implements ICredentialType {
 			typeOptions: { password: true },
 			default: '',
 			description:
-				'The global client authentication token (CLIENT_AUTH_TOKEN from your server config)',
+				'The global CLIENT_AUTH_TOKEN from your server configuration. Required for all API requests.',
 		},
 	];
 
@@ -67,5 +71,23 @@ export class ZedaApi implements ICredentialType {
 			url: '/status',
 			method: 'GET',
 		},
+		rules: [
+			{
+				type: 'responseCode',
+				properties: {
+					value: 404,
+					message:
+						'Instance not found. Please verify that the Instance ID is correct — it must be the instance UUID, not the token.',
+				},
+			},
+			{
+				type: 'responseCode',
+				properties: {
+					value: 401,
+					message:
+						'Invalid credentials. Please verify your Instance Token and Client Token are correct.',
+				},
+			},
+		],
 	};
 }
