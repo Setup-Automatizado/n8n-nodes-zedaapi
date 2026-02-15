@@ -208,6 +208,7 @@ export class ZedaApiTrigger implements INodeType {
 					{ name: 'Chat Presence', value: 'chat-presence' },
 					{ name: 'Connection Status', value: 'connection' },
 					{ name: 'Group Update', value: 'group' },
+					{ name: 'History Sync', value: 'history-sync' },
 					{ name: 'Message Delivery', value: 'delivery' },
 					{ name: 'Message Reaction', value: 'reaction' },
 					{ name: 'Message Read', value: 'read' },

@@ -68,6 +68,17 @@ export const webhookDescription: INodeProperties[] = [
 				},
 			},
 			{
+				name: 'Update History Sync Webhook',
+				value: 'updateWebhookHistorySync',
+				action: 'Set webhook URL for history sync events',
+				routing: {
+					request: {
+						method: 'PUT',
+						url: '/update-webhook-history-sync',
+					},
+				},
+			},
+			{
 				name: 'Update Message Status Webhook',
 				value: 'updateWebhookMessageStatus',
 				action: 'Set webhook URL for message status events',
@@ -129,6 +140,7 @@ export const webhookDescription: INodeProperties[] = [
 				resource: ['webhook'],
 				operation: [
 					'updateWebhookDelivery',
+					'updateWebhookHistorySync',
 					'updateWebhookReceived',
 					'updateWebhookReceivedDelivery',
 					'updateWebhookMessageStatus',
