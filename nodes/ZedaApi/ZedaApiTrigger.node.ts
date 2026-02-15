@@ -187,6 +187,12 @@ export class ZedaApiTrigger implements INodeType {
 		},
 		inputs: [],
 		outputs: [NodeConnectionTypes.Main],
+		credentials: [
+			{
+				name: 'zedaApi',
+				required: true,
+			},
+		],
 		webhooks: [
 			{
 				name: 'default',
