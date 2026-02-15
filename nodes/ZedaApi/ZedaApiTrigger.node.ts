@@ -9,15 +9,15 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 
 export class ZedaApiTrigger implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Zeda API Trigger',
+		displayName: 'Zé da API Trigger',
 		name: 'zedaApiTrigger',
 		icon: { light: 'file:../../icons/zedaapi.svg', dark: 'file:../../icons/zedaapi.dark.svg' },
 		group: ['trigger'],
 		version: 1,
 		subtitle: '={{$parameter["event"]}}',
-		description: 'Receive WhatsApp events via Zeda API webhooks',
+		description: 'Receive WhatsApp events via Zé da API webhooks',
 		defaults: {
-			name: 'Zeda API Trigger',
+			name: 'Zé da API Trigger',
 		},
 		usableAsTool: true,
 		inputs: [],

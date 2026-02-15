@@ -20,7 +20,7 @@ import { webhookDescription } from './resources/webhook';
 
 export class ZedaApi implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Zeda API',
+		displayName: 'Zé da API',
 		name: 'zedaApi',
 		icon: {
 			light: 'file:../../icons/zedaapi.svg',

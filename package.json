@@ -1,7 +1,7 @@
 {
 	"name": "@setup-automatizado/n8n-nodes-zedaapi",
 	"version": "0.1.0",
-	"description": "n8n community node for Zeda API — Complete WhatsApp integration powered by whatsmeow. 131 operations across 18 resources.",
+	"description": "n8n community node for Zé da API — Complete WhatsApp integration powered by whatsmeow. 131 operations across 18 resources.",
 	"license": "MIT",
 	"homepage": "https://github.com/Setup-Automatizado/n8n-nodes-zedaapi",
 	"keywords": [
