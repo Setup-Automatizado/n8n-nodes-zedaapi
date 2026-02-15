@@ -124,7 +124,7 @@ export const messageActionDescription: INodeProperties[] = [
 		},
 	},
 
-	// Message ID (shared by most operations)
+	// Message ID (shared by most operations — excludes readMessage which uses messageIds)
 	{
 		displayName: 'Message ID',
 		name: 'messageId',
@@ -140,7 +140,6 @@ export const messageActionDescription: INodeProperties[] = [
 					'removeReaction',
 					'forwardMessage',
 					'deleteMessage',
-					'readMessage',
 					'pinMessage',
 				],
 			},
@@ -160,7 +159,7 @@ export const messageActionDescription: INodeProperties[] = [
 		type: 'string',
 		default: '',
 		required: true,
-		placeholder: '👍',
+		placeholder: '\uD83D\uDC4D',
 		description: 'Emoji to react with',
 		displayOptions: {
 			show: {
@@ -176,14 +175,35 @@ export const messageActionDescription: INodeProperties[] = [
 		},
 	},
 
+	// --- Sender field for sendReaction, removeReaction, pinMessage ---
+	{
+		displayName: 'Sender',
+		name: 'sender',
+		type: 'string',
+		default: '',
+		description: 'Sender phone number (required for group messages)',
+		displayOptions: {
+			show: {
+				resource: ['messageAction'],
+				operation: ['sendReaction', 'removeReaction', 'pinMessage'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'sender',
+			},
+		},
+	},
+
 	// --- Forward Message ---
 	{
-		displayName: 'From Phone',
-		name: 'fromPhone',
+		displayName: 'Source Chat',
+		name: 'sourceChat',
 		type: 'string',
 		default: '',
 		required: true,
-		description: 'Source phone number where the message originated',
+		description: 'Source chat JID where the original message is',
 		displayOptions: {
 			show: {
 				resource: ['messageAction'],
@@ -193,7 +213,87 @@ export const messageActionDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'fromPhone',
+				property: 'sourceChat',
+			},
+		},
+	},
+	{
+		displayName: 'Is Group',
+		name: 'isGroup',
+		type: 'boolean',
+		default: false,
+		description: 'Whether the source chat is a group',
+		displayOptions: {
+			show: {
+				resource: ['messageAction'],
+				operation: ['forwardMessage'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'isGroup',
+			},
+		},
+	},
+	{
+		displayName: 'Delay Message (Ms)',
+		name: 'delayMessage',
+		type: 'number',
+		default: 0,
+		description: 'Delay in milliseconds before forwarding',
+		displayOptions: {
+			show: {
+				resource: ['messageAction'],
+				operation: ['forwardMessage'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'delayMessage',
+			},
+		},
+	},
+
+	// --- Read Message ---
+	{
+		displayName: 'Message IDs',
+		name: 'messageIds',
+		type: 'string',
+		typeOptions: { multipleValues: true },
+		default: [],
+		required: true,
+		description: 'Array of message IDs to mark as read',
+		displayOptions: {
+			show: {
+				resource: ['messageAction'],
+				operation: ['readMessage'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'messageIds',
+			},
+		},
+	},
+	{
+		displayName: 'Sender',
+		name: 'sender',
+		type: 'string',
+		default: '',
+		description: 'Sender phone number (required for group messages)',
+		displayOptions: {
+			show: {
+				resource: ['messageAction'],
+				operation: ['readMessage'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'sender',
 			},
 		},
 	},
@@ -246,12 +346,15 @@ export const messageActionDescription: INodeProperties[] = [
 		name: 'action',
 		type: 'options',
 		options: [
-			{ name: 'Archive', value: 'archive', action: 'Archive a chat' },
-			{ name: 'Clear', value: 'clear', action: 'Clear a chat' },
-			{ name: 'Delete', value: 'delete', action: 'Delete a chat' },
-			{ name: 'Mute', value: 'mute', action: 'Mute a chat' },
-			{ name: 'Pin', value: 'pin', action: 'Pin a chat' },
-			{ name: 'Read', value: 'read', action: 'Read a chat' },
+			{ name: 'Archive', value: 'archive', action: 'Archive a message action' },
+			{ name: 'Clear', value: 'clear', action: 'Clear a message action' },
+			{ name: 'Delete', value: 'delete', action: 'Delete a message action' },
+			{ name: 'Mute', value: 'mute', action: 'Mute a message action' },
+			{ name: 'Pin', value: 'pin', action: 'Pin a message action' },
+			{ name: 'Read', value: 'read', action: 'Read a message action' },
+			{ name: 'Unarchive', value: 'unarchive', action: 'Unarchive a message action' },
+			{ name: 'Unmute', value: 'unmute', action: 'Unmute a message action' },
+			{ name: 'Unpin', value: 'unpin', action: 'Unpin a message action' },
 		],
 		default: 'read',
 		required: true,
