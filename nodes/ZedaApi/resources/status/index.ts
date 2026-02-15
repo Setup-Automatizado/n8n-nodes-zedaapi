@@ -13,13 +13,13 @@ export const statusDescription: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Send Text Status',
-				value: 'sendTextStatus',
-				action: 'Post a text status story',
+				name: 'Send Audio Status',
+				value: 'sendAudioStatus',
+				action: 'Post an audio status story',
 				routing: {
 					request: {
 						method: 'POST',
-						url: '/send-text-status',
+						url: '/send-audio-status',
 					},
 				},
 			},
@@ -35,13 +35,13 @@ export const statusDescription: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Send Audio Status',
-				value: 'sendAudioStatus',
-				action: 'Post an audio status story',
+				name: 'Send Text Status',
+				value: 'sendTextStatus',
+				action: 'Post a text status story',
 				routing: {
 					request: {
 						method: 'POST',
-						url: '/send-audio-status',
+						url: '/send-text-status',
 					},
 				},
 			},
@@ -62,8 +62,8 @@ export const statusDescription: INodeProperties[] = [
 
 	// --- Send Text Status ---
 	{
-		displayName: 'Message',
-		name: 'message',
+		displayName: 'Text',
+		name: 'text',
 		type: 'string',
 		typeOptions: { rows: 3 },
 		default: '',
@@ -77,7 +77,7 @@ export const statusDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'message',
+				property: 'text',
 			},
 		},
 	},
@@ -102,9 +102,13 @@ export const statusDescription: INodeProperties[] = [
 	{
 		displayName: 'Font',
 		name: 'font',
-		type: 'string',
-		default: '',
-		description: 'Font style for the text status',
+		type: 'number',
+		default: 0,
+		description: 'Font style number (0-5)',
+		typeOptions: {
+			minValue: 0,
+			maxValue: 5,
+		},
 		displayOptions: {
 			show: {
 				resource: ['status'],
@@ -112,10 +116,7 @@ export const statusDescription: INodeProperties[] = [
 			},
 		},
 		routing: {
-			send: {
-				type: 'body',
-				property: 'font',
-			},
+			send: { type: 'body', property: 'font' },
 		},
 	},
 
@@ -220,6 +221,40 @@ export const statusDescription: INodeProperties[] = [
 				type: 'body',
 				property: 'caption',
 			},
+		},
+	},
+
+	// --- Common fields for all status operations ---
+	{
+		displayName: 'Message ID',
+		name: 'messageId',
+		type: 'string',
+		default: '',
+		description: 'Custom tracking message ID',
+		displayOptions: {
+			show: {
+				resource: ['status'],
+				operation: ['sendAudioStatus', 'sendImageStatus', 'sendTextStatus', 'sendVideoStatus'],
+			},
+		},
+		routing: {
+			send: { type: 'body', property: 'messageId' },
+		},
+	},
+	{
+		displayName: 'Delay Message (Ms)',
+		name: 'delayMessage',
+		type: 'number',
+		default: 0,
+		description: 'Delay in milliseconds before posting status',
+		displayOptions: {
+			show: {
+				resource: ['status'],
+				operation: ['sendAudioStatus', 'sendImageStatus', 'sendTextStatus', 'sendVideoStatus'],
+			},
+		},
+		routing: {
+			send: { type: 'body', property: 'delayMessage' },
 		},
 	},
 ];
