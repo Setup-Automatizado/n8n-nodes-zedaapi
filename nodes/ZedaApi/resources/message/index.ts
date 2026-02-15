@@ -652,6 +652,76 @@ export const messageDescription: INodeProperties[] = [
 		},
 		options: [
 			{
+				displayName: 'Address',
+				name: 'address',
+				type: 'fixedCollection',
+				default: {},
+				description: 'Structured address for the vCard',
+				options: [
+					{
+						displayName: 'Address Details',
+						name: 'addressValues',
+						values: [
+							{
+								displayName: 'City',
+								name: 'city',
+								type: 'string',
+								default: '',
+								description: 'City or locality',
+							},
+							{
+								displayName: 'Country',
+								name: 'country',
+								type: 'string',
+								default: '',
+							},
+							{
+								displayName: 'Extended',
+								name: 'extended',
+								type: 'string',
+								default: '',
+								description: 'Extended address (apartment, suite)',
+							},
+							{
+								displayName: 'Post Box',
+								name: 'postBox',
+								type: 'string',
+								default: '',
+								description: 'Post office box number',
+							},
+							{
+								displayName: 'Postal Code',
+								name: 'postalCode',
+								type: 'string',
+								default: '',
+							},
+							{
+								displayName: 'Region',
+								name: 'region',
+								type: 'string',
+								default: '',
+								description: 'State, province or region',
+							},
+							{
+								displayName: 'Street',
+								name: 'street',
+								type: 'string',
+								default: '',
+							},
+							{
+								displayName: 'Type',
+								name: 'type',
+								type: 'string',
+								default: '',
+								placeholder: 'HOME or WORK',
+								description: 'Address type',
+							},
+						],
+					},
+				],
+				routing: { send: { type: 'body', property: 'address' } },
+			},
+			{
 				displayName: 'Birthday',
 				name: 'birthday',
 				type: 'string',
@@ -768,10 +838,33 @@ export const messageDescription: INodeProperties[] = [
 				name: 'contactValues',
 				values: [
 					{
+						displayName: 'Birthday',
+						name: 'birthday',
+						type: 'string',
+						default: '',
+						placeholder: 'YYYY-MM-DD',
+					},
+					{
 						displayName: 'Business Description',
 						name: 'contactBusinessDescription',
 						type: 'string',
 						default: '',
+					},
+					{
+						displayName: 'Contact Name',
+						name: 'contactName',
+						type: 'string',
+						default: '',
+						required: true,
+						description: 'Full name of the contact',
+					},
+					{
+						displayName: 'Contact Phone',
+						name: 'contactPhone',
+						type: 'string',
+						default: '',
+						required: true,
+						description: 'Phone number in international format',
 					},
 					{
 						displayName: 'Email',
@@ -805,13 +898,6 @@ export const messageDescription: INodeProperties[] = [
 						default: '',
 					},
 					{
-						displayName: 'Name',
-						name: 'name',
-						type: 'string',
-						default: '',
-						required: true,
-					},
-					{
 						displayName: 'Name Prefix',
 						name: 'namePrefix',
 						type: 'string',
@@ -840,13 +926,6 @@ export const messageDescription: INodeProperties[] = [
 						name: 'organization',
 						type: 'string',
 						default: '',
-					},
-					{
-						displayName: 'Phone',
-						name: 'phone',
-						type: 'string',
-						default: '',
-						required: true,
 					},
 					{
 						displayName: 'URL',
@@ -964,7 +1043,16 @@ export const messageDescription: INodeProperties[] = [
 	makeAdditionalFields(
 		'message',
 		['sendText'],
-		['delayTyping', 'duration', 'linkPreview', 'messageId', 'privateAnswer'],
+		[
+			'delayTyping',
+			'duration',
+			'groupMentioned',
+			'linkPreview',
+			'mentioned',
+			'mentionedAll',
+			'messageId',
+			'privateAnswer',
+		],
 	),
 	makeAdditionalFields(
 		'message',
@@ -982,7 +1070,7 @@ export const messageDescription: INodeProperties[] = [
 	),
 	makeAdditionalFields(
 		'message',
-		['sendContact', 'sendContacts', 'sendDocument', 'sendLocation', 'sendSticker'],
+		['sendContact', 'sendContacts', 'sendDocument', 'sendSticker'],
 		[
 			'delayTyping',
 			'duration',
@@ -992,6 +1080,11 @@ export const messageDescription: INodeProperties[] = [
 			'messageId',
 			'privateAnswer',
 		],
+	),
+	makeAdditionalFields(
+		'message',
+		['sendLocation'],
+		['delayTyping', 'duration', 'groupMentioned', 'mentioned', 'mentionedAll', 'messageId'],
 	),
 	makeAdditionalFields('message', ['sendLink'], ['delayTyping', 'messageId']),
 ];
