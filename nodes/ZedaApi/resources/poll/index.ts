@@ -63,8 +63,8 @@ export const pollDescription: INodeProperties[] = [
 
 	// --- Send Poll ---
 	{
-		displayName: 'Poll Name',
-		name: 'pollName',
+		displayName: 'Poll Question',
+		name: 'message',
 		type: 'string',
 		default: '',
 		required: true,
@@ -78,18 +78,18 @@ export const pollDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'pollName',
+				property: 'message',
 			},
 		},
 	},
 	{
 		displayName: 'Poll Options',
-		name: 'pollOptions',
-		type: 'string',
+		name: 'poll',
+		type: 'fixedCollection',
 		typeOptions: {
 			multipleValues: true,
 		},
-		default: [],
+		default: {},
 		required: true,
 		description: 'Poll options (minimum 2)',
 		displayOptions: {
@@ -98,16 +98,32 @@ export const pollDescription: INodeProperties[] = [
 				operation: ['sendPoll'],
 			},
 		},
+		options: [
+			{
+				displayName: 'Option',
+				name: 'optionValues',
+				values: [
+					{
+						displayName: 'Name',
+						name: 'name',
+						type: 'string',
+						default: '',
+						required: true,
+						description: 'Option text',
+					},
+				],
+			},
+		],
 		routing: {
 			send: {
 				type: 'body',
-				property: 'pollOptions',
+				property: 'poll',
 			},
 		},
 	},
 	{
-		displayName: 'Selectable Count',
-		name: 'selectableCount',
+		displayName: 'Max Options',
+		name: 'pollMaxOptions',
 		type: 'number',
 		default: 0,
 		description: 'Number of options a user can select (0 = multi-select)',
@@ -120,15 +136,72 @@ export const pollDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'selectableCount',
+				property: 'pollMaxOptions',
+			},
+		},
+	},
+	{
+		displayName: 'Delay Message (Ms)',
+		name: 'delayMessage',
+		type: 'number',
+		default: 0,
+		description: 'Delay in milliseconds before sending',
+		displayOptions: {
+			show: {
+				resource: ['poll'],
+				operation: ['sendPoll'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'delayMessage',
+			},
+		},
+	},
+	{
+		displayName: 'Delay Typing (Seconds)',
+		name: 'delayTyping',
+		type: 'number',
+		default: 0,
+		description: 'Show typing indicator before sending',
+		displayOptions: {
+			show: {
+				resource: ['poll'],
+				operation: ['sendPoll'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'delayTyping',
+			},
+		},
+	},
+	{
+		displayName: 'Message ID (Reply)',
+		name: 'messageId',
+		type: 'string',
+		default: '',
+		description: 'Message ID to reply to',
+		displayOptions: {
+			show: {
+				resource: ['poll'],
+				operation: ['sendPoll'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'messageId',
 			},
 		},
 	},
 
 	// --- Send Poll Vote ---
 	{
-		displayName: 'Message ID',
-		name: 'messageId',
+		displayName: 'Poll ID',
+		name: 'pollId',
 		type: 'string',
 		default: '',
 		required: true,
@@ -142,13 +215,33 @@ export const pollDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'messageId',
+				property: 'pollId',
 			},
 		},
 	},
 	{
-		displayName: 'Poll Vote',
-		name: 'pollVote',
+		displayName: 'Poll Sender',
+		name: 'pollSender',
+		type: 'string',
+		default: '',
+		required: true,
+		description: 'Phone number of who created the poll',
+		displayOptions: {
+			show: {
+				resource: ['poll'],
+				operation: ['sendPollVote'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'pollSender',
+			},
+		},
+	},
+	{
+		displayName: 'Selected Options',
+		name: 'options',
 		type: 'string',
 		typeOptions: {
 			multipleValues: true,
@@ -165,7 +258,26 @@ export const pollDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'pollVote',
+				property: 'options',
+			},
+		},
+	},
+	{
+		displayName: 'Delay Message (Ms)',
+		name: 'delayMessage',
+		type: 'number',
+		default: 0,
+		description: 'Delay in milliseconds before sending',
+		displayOptions: {
+			show: {
+				resource: ['poll'],
+				operation: ['sendPollVote'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'delayMessage',
 			},
 		},
 	},
