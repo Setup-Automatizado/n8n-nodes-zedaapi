@@ -9,7 +9,7 @@ import type {
 export class ZedaApi implements ICredentialType {
 	name = 'zedaApi';
 
-	displayName = 'Zé Da API';
+	displayName = 'Ze Da API';
 
 	icon: Icon = { light: 'file:../icons/zedaapi.svg', dark: 'file:../icons/zedaapi.dark.svg' };
 
@@ -23,7 +23,7 @@ export class ZedaApi implements ICredentialType {
 			default: 'http://localhost:8080',
 			placeholder: 'e.g. https://api.zedaapi.com',
 			description:
-				'The base URL of your Zé da API server (not the dashboard URL). This is the direct API endpoint.',
+				'The base URL of your Ze da API server (not the dashboard URL). This is the direct API endpoint.',
 		},
 		{
 			displayName: 'Instance ID',

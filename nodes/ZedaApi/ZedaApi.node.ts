@@ -20,7 +20,7 @@ import { webhookDescription } from './resources/webhook';
 
 export class ZedaApi implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Zé da API',
+		displayName: 'Ze da API',
 		name: 'zedaApi',
 		icon: {
 			light: 'file:../../icons/zedaapi.svg',
@@ -30,9 +30,9 @@ export class ZedaApi implements INodeType {
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description:
-			'WhatsApp API powered by Zé da API - Send messages, manage groups, contacts and more',
+			'WhatsApp API powered by Ze da API - Send messages, manage groups, contacts and more',
 		defaults: {
-			name: 'Zé da API',
+			name: 'Ze da API',
 		},
 		usableAsTool: true,
 		inputs: [NodeConnectionTypes.Main],
