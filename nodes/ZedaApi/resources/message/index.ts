@@ -1,4 +1,5 @@
 import type { INodeProperties } from 'n8n-workflow';
+import { makeAdditionalFields } from '../../shared/descriptions';
 
 const phoneField = (resource: string, operations: string[]): INodeProperties => ({
 	displayName: 'Phone',
@@ -499,6 +500,25 @@ export const messageDescription: INodeProperties[] = [
 			},
 		},
 	},
+	{
+		displayName: 'Caption',
+		name: 'caption',
+		type: 'string',
+		typeOptions: { rows: 2 },
+		default: '',
+		displayOptions: {
+			show: {
+				resource: ['message'],
+				operation: ['sendPtv'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'caption',
+			},
+		},
+	},
 
 	// --- Send Location ---
 	{
@@ -578,24 +598,6 @@ export const messageDescription: INodeProperties[] = [
 			},
 		},
 	},
-	{
-		displayName: 'URL',
-		name: 'url',
-		type: 'string',
-		default: '',
-		displayOptions: {
-			show: {
-				resource: ['message'],
-				operation: ['sendLocation'],
-			},
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'url',
-			},
-		},
-	},
 
 	// --- Send Contact ---
 	{
@@ -636,6 +638,114 @@ export const messageDescription: INodeProperties[] = [
 			},
 		},
 	},
+	{
+		displayName: 'Extended Contact Fields',
+		name: 'extendedContactFields',
+		type: 'collection',
+		placeholder: 'Add Field',
+		default: {},
+		displayOptions: {
+			show: {
+				resource: ['message'],
+				operation: ['sendContact'],
+			},
+		},
+		options: [
+			{
+				displayName: 'Birthday',
+				name: 'birthday',
+				type: 'string',
+				default: '',
+				placeholder: 'YYYY-MM-DD',
+				routing: { send: { type: 'body', property: 'birthday' } },
+			},
+			{
+				displayName: 'Business Description',
+				name: 'contactBusinessDescription',
+				type: 'string',
+				default: '',
+				routing: { send: { type: 'body', property: 'contactBusinessDescription' } },
+			},
+			{
+				displayName: 'Email',
+				name: 'email',
+				type: 'string',
+				placeholder: 'name@email.com',
+				default: '',
+				routing: { send: { type: 'body', property: 'email' } },
+			},
+			{
+				displayName: 'First Name',
+				name: 'firstName',
+				type: 'string',
+				default: '',
+				routing: { send: { type: 'body', property: 'firstName' } },
+			},
+			{
+				displayName: 'Job Title',
+				name: 'jobTitle',
+				type: 'string',
+				default: '',
+				routing: { send: { type: 'body', property: 'jobTitle' } },
+			},
+			{
+				displayName: 'Last Name',
+				name: 'lastName',
+				type: 'string',
+				default: '',
+				routing: { send: { type: 'body', property: 'lastName' } },
+			},
+			{
+				displayName: 'Middle Name',
+				name: 'middleName',
+				type: 'string',
+				default: '',
+				routing: { send: { type: 'body', property: 'middleName' } },
+			},
+			{
+				displayName: 'Name Prefix',
+				name: 'namePrefix',
+				type: 'string',
+				default: '',
+				routing: { send: { type: 'body', property: 'namePrefix' } },
+			},
+			{
+				displayName: 'Name Suffix',
+				name: 'nameSuffix',
+				type: 'string',
+				default: '',
+				routing: { send: { type: 'body', property: 'nameSuffix' } },
+			},
+			{
+				displayName: 'Nickname',
+				name: 'nickname',
+				type: 'string',
+				default: '',
+				routing: { send: { type: 'body', property: 'nickname' } },
+			},
+			{
+				displayName: 'Note',
+				name: 'note',
+				type: 'string',
+				default: '',
+				routing: { send: { type: 'body', property: 'note' } },
+			},
+			{
+				displayName: 'Organization',
+				name: 'organization',
+				type: 'string',
+				default: '',
+				routing: { send: { type: 'body', property: 'organization' } },
+			},
+			{
+				displayName: 'URL',
+				name: 'url',
+				type: 'string',
+				default: '',
+				routing: { send: { type: 'body', property: 'url' } },
+			},
+		],
+	},
 
 	// --- Send Contacts ---
 	{
@@ -658,6 +768,43 @@ export const messageDescription: INodeProperties[] = [
 				name: 'contactValues',
 				values: [
 					{
+						displayName: 'Business Description',
+						name: 'contactBusinessDescription',
+						type: 'string',
+						default: '',
+					},
+					{
+						displayName: 'Email',
+						name: 'email',
+						type: 'string',
+						placeholder: 'name@email.com',
+						default: '',
+					},
+					{
+						displayName: 'First Name',
+						name: 'firstName',
+						type: 'string',
+						default: '',
+					},
+					{
+						displayName: 'Job Title',
+						name: 'jobTitle',
+						type: 'string',
+						default: '',
+					},
+					{
+						displayName: 'Last Name',
+						name: 'lastName',
+						type: 'string',
+						default: '',
+					},
+					{
+						displayName: 'Middle Name',
+						name: 'middleName',
+						type: 'string',
+						default: '',
+					},
+					{
 						displayName: 'Name',
 						name: 'name',
 						type: 'string',
@@ -665,11 +812,47 @@ export const messageDescription: INodeProperties[] = [
 						required: true,
 					},
 					{
+						displayName: 'Name Prefix',
+						name: 'namePrefix',
+						type: 'string',
+						default: '',
+					},
+					{
+						displayName: 'Name Suffix',
+						name: 'nameSuffix',
+						type: 'string',
+						default: '',
+					},
+					{
+						displayName: 'Nickname',
+						name: 'nickname',
+						type: 'string',
+						default: '',
+					},
+					{
+						displayName: 'Note',
+						name: 'note',
+						type: 'string',
+						default: '',
+					},
+					{
+						displayName: 'Organization',
+						name: 'organization',
+						type: 'string',
+						default: '',
+					},
+					{
 						displayName: 'Phone',
 						name: 'phone',
 						type: 'string',
 						default: '',
 						required: true,
+					},
+					{
+						displayName: 'URL',
+						name: 'url',
+						type: 'string',
+						default: '',
 					},
 				],
 			},
@@ -772,8 +955,43 @@ export const messageDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'description',
+				property: 'linkDescription',
 			},
 		},
 	},
+
+	// Additional Fields
+	makeAdditionalFields(
+		'message',
+		['sendText'],
+		['delayTyping', 'duration', 'linkPreview', 'messageId', 'privateAnswer'],
+	),
+	makeAdditionalFields(
+		'message',
+		['sendAudio', 'sendGif', 'sendImage', 'sendPtv', 'sendVideo'],
+		[
+			'delayTyping',
+			'duration',
+			'groupMentioned',
+			'mentioned',
+			'mentionedAll',
+			'messageId',
+			'privateAnswer',
+			'viewOnce',
+		],
+	),
+	makeAdditionalFields(
+		'message',
+		['sendContact', 'sendContacts', 'sendDocument', 'sendLocation', 'sendSticker'],
+		[
+			'delayTyping',
+			'duration',
+			'groupMentioned',
+			'mentioned',
+			'mentionedAll',
+			'messageId',
+			'privateAnswer',
+		],
+	),
+	makeAdditionalFields('message', ['sendLink'], ['delayTyping', 'messageId']),
 ];
