@@ -262,7 +262,35 @@ export class ZedaApiTrigger implements INodeType {
 
 	async webhook(this: IWebhookFunctions): Promise<IWebhookResponseData> {
 		const req = this.getRequestObject();
-		const body = this.getBodyData();
+
+		// getBodyData() can return undefined when the request body is empty,
+		// malformed, or has an unsupported content-type. Fallback to req.body.
+		const rawBody = this.getBodyData();
+		const body: IDataObject =
+			rawBody && typeof rawBody === 'object' && Object.keys(rawBody).length > 0
+				? rawBody
+				: ((req.body as IDataObject) ?? {});
+
+		// If body is still empty, return the raw payload for debugging
+		if (!body || Object.keys(body).length === 0) {
+			return {
+				workflowData: [
+					this.helpers.returnJsonArray({
+						chatInput: '',
+						sessionId: '',
+						messageType: 'empty',
+						event: 'unknown',
+						error: 'Empty webhook body received',
+						headers: {
+							'content-type': req.headers['content-type'],
+							'x-forwarded-for': req.headers['x-forwarded-for'],
+							'user-agent': req.headers['user-agent'],
+						},
+					}),
+				],
+			};
+		}
+
 		const event = this.getNodeParameter('event') as string;
 		const ignoreFromMe = this.getNodeParameter('ignoreFromMe', true) as boolean;
 		const ignoreGroups = this.getNodeParameter('ignoreGroups', false) as boolean;
