@@ -13,17 +13,6 @@ export const eventDescription: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Send Event',
-				value: 'sendEvent',
-				action: 'Send an event invitation',
-				routing: {
-					request: {
-						method: 'POST',
-						url: '/send-event',
-					},
-				},
-			},
-			{
 				name: 'Edit Event',
 				value: 'editEvent',
 				action: 'Edit an existing event',
@@ -31,6 +20,17 @@ export const eventDescription: INodeProperties[] = [
 					request: {
 						method: 'POST',
 						url: '/send-edit-event',
+					},
+				},
+			},
+			{
+				name: 'Send Event',
+				value: 'sendEvent',
+				action: 'Send an event invitation',
+				routing: {
+					request: {
+						method: 'POST',
+						url: '/send-event',
 					},
 				},
 			},
@@ -74,12 +74,12 @@ export const eventDescription: INodeProperties[] = [
 
 	// --- Send Event ---
 	{
-		displayName: 'Name',
+		displayName: 'Event Name',
 		name: 'name',
 		type: 'string',
 		default: '',
 		required: true,
-		description: 'Event name',
+		description: 'Name of the event',
 		displayOptions: {
 			show: {
 				resource: ['event'],
@@ -90,6 +90,26 @@ export const eventDescription: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'name',
+			},
+		},
+	},
+	{
+		displayName: 'Date Time',
+		name: 'dateTime',
+		type: 'dateTime',
+		default: '',
+		required: true,
+		description: 'Event date and time',
+		displayOptions: {
+			show: {
+				resource: ['event'],
+				operation: ['sendEvent'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'dateTime',
 			},
 		},
 	},
@@ -113,48 +133,11 @@ export const eventDescription: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Start Time',
-		name: 'startTime',
-		type: 'dateTime',
-		default: '',
-		required: true,
-		displayOptions: {
-			show: {
-				resource: ['event'],
-				operation: ['sendEvent'],
-			},
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'startTime',
-			},
-		},
-	},
-	{
-		displayName: 'End Time',
-		name: 'endTime',
-		type: 'dateTime',
-		default: '',
-		required: true,
-		displayOptions: {
-			show: {
-				resource: ['event'],
-				operation: ['sendEvent'],
-			},
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'endTime',
-			},
-		},
-	},
-	{
-		displayName: 'Location',
-		name: 'location',
+		displayName: 'Location Name',
+		name: 'locationName',
 		type: 'string',
 		default: '',
+		description: 'Name of the event location',
 		displayOptions: {
 			show: {
 				resource: ['event'],
@@ -164,16 +147,54 @@ export const eventDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'location',
+				property: 'locationName',
 			},
 		},
 	},
 	{
-		displayName: 'Call Type',
-		name: 'callType',
+		displayName: 'Location Latitude',
+		name: 'degreesLatitude',
+		type: 'number',
+		typeOptions: { numberPrecision: 8 },
+		default: 0,
+		displayOptions: {
+			show: {
+				resource: ['event'],
+				operation: ['sendEvent'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'degreesLatitude',
+			},
+		},
+	},
+	{
+		displayName: 'Location Longitude',
+		name: 'degreesLongitude',
+		type: 'number',
+		typeOptions: { numberPrecision: 8 },
+		default: 0,
+		displayOptions: {
+			show: {
+				resource: ['event'],
+				operation: ['sendEvent'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'degreesLongitude',
+			},
+		},
+	},
+	{
+		displayName: 'Call Link Type',
+		name: 'callLinkType',
 		type: 'string',
 		default: '',
-		description: 'Type of call (e.g., voice, video)',
+		description: 'Type of call link (e.g. voice, video)',
 		displayOptions: {
 			show: {
 				resource: ['event'],
@@ -183,16 +204,16 @@ export const eventDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'callType',
+				property: 'callLinkType',
 			},
 		},
 	},
 	{
-		displayName: 'Call URL',
-		name: 'callUrl',
-		type: 'string',
-		default: '',
-		description: 'URL for the call link',
+		displayName: 'Canceled',
+		name: 'canceled',
+		type: 'boolean',
+		default: false,
+		description: 'Whether the event is canceled',
 		displayOptions: {
 			show: {
 				resource: ['event'],
@@ -202,23 +223,58 @@ export const eventDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'callUrl',
+				property: 'canceled',
 			},
 		},
 	},
-
-	// --- Edit Event ---
 	{
-		displayName: 'Message ID',
+		displayName: 'Delay Message (Ms)',
+		name: 'delayMessage',
+		type: 'number',
+		default: 0,
+		description: 'Delay in milliseconds before sending',
+		displayOptions: {
+			show: {
+				resource: ['event'],
+				operation: ['sendEvent'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'delayMessage',
+			},
+		},
+	},
+	{
+		displayName: 'Delay Typing (Seconds)',
+		name: 'delayTyping',
+		type: 'number',
+		default: 0,
+		description: 'Show typing indicator before sending',
+		displayOptions: {
+			show: {
+				resource: ['event'],
+				operation: ['sendEvent'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'delayTyping',
+			},
+		},
+	},
+	{
+		displayName: 'Message ID (Reply)',
 		name: 'messageId',
 		type: 'string',
 		default: '',
-		required: true,
-		description: 'ID of the event message to edit',
+		description: 'Message ID to reply to',
 		displayOptions: {
 			show: {
 				resource: ['event'],
-				operation: ['editEvent'],
+				operation: ['sendEvent'],
 			},
 		},
 		routing: {
@@ -228,6 +284,28 @@ export const eventDescription: INodeProperties[] = [
 			},
 		},
 	},
+
+	// --- Edit Event ---
+	{
+		displayName: 'Event ID',
+		name: 'eventId',
+		type: 'string',
+		default: '',
+		required: true,
+		description: 'ID of the event to edit',
+		displayOptions: {
+			show: {
+				resource: ['event'],
+				operation: ['editEvent'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'eventId',
+			},
+		},
+	},
 	{
 		displayName: 'Name',
 		name: 'name',
@@ -266,10 +344,11 @@ export const eventDescription: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Start Time',
-		name: 'startTime',
+		displayName: 'Date Time',
+		name: 'dateTime',
 		type: 'dateTime',
 		default: '',
+		description: 'Updated event date and time',
 		displayOptions: {
 			show: {
 				resource: ['event'],
@@ -279,33 +358,16 @@ export const eventDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'startTime',
+				property: 'dateTime',
 			},
 		},
 	},
 	{
-		displayName: 'End Time',
-		name: 'endTime',
-		type: 'dateTime',
-		default: '',
-		displayOptions: {
-			show: {
-				resource: ['event'],
-				operation: ['editEvent'],
-			},
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'endTime',
-			},
-		},
-	},
-	{
-		displayName: 'Location',
-		name: 'location',
+		displayName: 'Location Name',
+		name: 'locationName',
 		type: 'string',
 		default: '',
+		description: 'Name of the event location',
 		displayOptions: {
 			show: {
 				resource: ['event'],
@@ -315,19 +377,76 @@ export const eventDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'location',
+				property: 'locationName',
+			},
+		},
+	},
+	{
+		displayName: 'Canceled',
+		name: 'canceled',
+		type: 'boolean',
+		default: false,
+		description: 'Whether to cancel the event',
+		displayOptions: {
+			show: {
+				resource: ['event'],
+				operation: ['editEvent'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'canceled',
+			},
+		},
+	},
+	{
+		displayName: 'Delay Message (Ms)',
+		name: 'delayMessage',
+		type: 'number',
+		default: 0,
+		description: 'Delay in milliseconds before sending',
+		displayOptions: {
+			show: {
+				resource: ['event'],
+				operation: ['editEvent'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'delayMessage',
+			},
+		},
+	},
+	{
+		displayName: 'Delay Typing (Seconds)',
+		name: 'delayTyping',
+		type: 'number',
+		default: 0,
+		description: 'Show typing indicator before sending',
+		displayOptions: {
+			show: {
+				resource: ['event'],
+				operation: ['editEvent'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'delayTyping',
 			},
 		},
 	},
 
 	// --- Send Event Response ---
 	{
-		displayName: 'Message ID',
-		name: 'messageId',
+		displayName: 'Event ID',
+		name: 'eventId',
 		type: 'string',
 		default: '',
 		required: true,
-		description: 'ID of the event message to respond to',
+		description: 'ID of the event to respond to',
 		displayOptions: {
 			show: {
 				resource: ['event'],
@@ -337,7 +456,7 @@ export const eventDescription: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'messageId',
+				property: 'eventId',
 			},
 		},
 	},
@@ -347,8 +466,8 @@ export const eventDescription: INodeProperties[] = [
 		type: 'options',
 		options: [
 			{ name: 'Going', value: 'going' },
-			{ name: 'Not Going', value: 'not_going' },
 			{ name: 'Maybe', value: 'maybe' },
+			{ name: 'Not Going', value: 'not_going' },
 		],
 		default: 'going',
 		required: true,
@@ -362,6 +481,63 @@ export const eventDescription: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'response',
+			},
+		},
+	},
+	{
+		displayName: 'Extra Guest Count',
+		name: 'extraGuestCount',
+		type: 'number',
+		default: 0,
+		description: 'Number of extra guests',
+		displayOptions: {
+			show: {
+				resource: ['event'],
+				operation: ['sendEventResponse'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'extraGuestCount',
+			},
+		},
+	},
+	{
+		displayName: 'Delay Message (Ms)',
+		name: 'delayMessage',
+		type: 'number',
+		default: 0,
+		description: 'Delay in milliseconds before sending',
+		displayOptions: {
+			show: {
+				resource: ['event'],
+				operation: ['sendEventResponse'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'delayMessage',
+			},
+		},
+	},
+	{
+		displayName: 'Delay Typing (Seconds)',
+		name: 'delayTyping',
+		type: 'number',
+		default: 0,
+		description: 'Show typing indicator before sending',
+		displayOptions: {
+			show: {
+				resource: ['event'],
+				operation: ['sendEventResponse'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'delayTyping',
 			},
 		},
 	},
