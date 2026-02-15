@@ -1,19 +1,24 @@
 {
-	"name": "n8n-nodes-<...>",
+	"name": "n8n-nodes-zedaapi",
 	"version": "0.1.0",
-	"description": "",
+	"description": "n8n community node for Zeda API - Complete WhatsApp integration with messages, groups, contacts, communities, newsletters and more",
 	"license": "MIT",
-	"homepage": "",
+	"homepage": "https://github.com/Setup-Automatizado/n8n-nodes-zedaapi",
 	"keywords": [
-		"n8n-community-node-package"
+		"n8n-community-node-package",
+		"n8n",
+		"whatsapp",
+		"zedaapi",
+		"whatsmeow",
+		"messaging"
 	],
 	"author": {
-		"name": "",
-		"email": ""
+		"name": "Setup Automatizado",
+		"email": "contato@setupautomatizado.com.br"
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/<...>/n8n-nodes-<...>.git"
+		"url": "https://github.com/Setup-Automatizado/n8n-nodes-zedaapi.git"
 	},
 	"scripts": {
 		"build": "n8n-node build",
@@ -31,12 +36,11 @@
 		"n8nNodesApiVersion": 1,
 		"strict": true,
 		"credentials": [
-			"dist/credentials/GithubIssuesApi.credentials.js",
-			"dist/credentials/GithubIssuesOAuth2Api.credentials.js"
+			"dist/credentials/ZedaApi.credentials.js"
 		],
 		"nodes": [
-			"dist/nodes/GithubIssues/GithubIssues.node.js",
-			"dist/nodes/Example/Example.node.js"
+			"dist/nodes/ZedaApi/ZedaApi.node.js",
+			"dist/nodes/ZedaApi/ZedaApiTrigger.node.js"
 		]
 	},
 	"devDependencies": {
