@@ -1,7 +1,7 @@
 {
-	"name": "n8n-nodes-zedaapi",
+	"name": "@setup-automatizado/n8n-nodes-zedaapi",
 	"version": "0.1.0",
-	"description": "n8n community node for Zeda API - Complete WhatsApp integration with messages, groups, contacts, communities, newsletters and more",
+	"description": "n8n community node for Zeda API — Complete WhatsApp integration powered by whatsmeow. 131 operations across 18 resources.",
 	"license": "MIT",
 	"homepage": "https://github.com/Setup-Automatizado/n8n-nodes-zedaapi",
 	"keywords": [
@@ -10,15 +10,29 @@
 		"whatsapp",
 		"zedaapi",
 		"whatsmeow",
-		"messaging"
+		"messaging",
+		"automation",
+		"chatbot",
+		"whatsapp-api",
+		"whatsapp-bot"
 	],
 	"author": {
 		"name": "Setup Automatizado",
-		"email": "contato@setupautomatizado.com.br"
+		"email": "contato@setupautomatizado.com.br",
+		"url": "https://github.com/Setup-Automatizado"
 	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/Setup-Automatizado/n8n-nodes-zedaapi.git"
+	},
+	"bugs": {
+		"url": "https://github.com/Setup-Automatizado/n8n-nodes-zedaapi/issues"
+	},
+	"engines": {
+		"node": ">=22.0.0"
+	},
+	"publishConfig": {
+		"access": "public"
 	},
 	"scripts": {
 		"build": "n8n-node build",
