@@ -95,12 +95,12 @@ export const interactiveMessageDescription: INodeProperties[] = [
 			show: {
 				resource: ['interactiveMessage'],
 				operation: [
-					'sendButtonList',
 					'sendButtonActions',
-					'sendOptionList',
-					'sendButtonPix',
+					'sendButtonList',
 					'sendButtonOtp',
+					'sendButtonPix',
 					'sendCarousel',
+					'sendOptionList',
 				],
 			},
 		},
@@ -109,6 +109,79 @@ export const interactiveMessageDescription: INodeProperties[] = [
 				type: 'body',
 				property: 'phone',
 			},
+		},
+	},
+
+	// Delay Message (all operations)
+	{
+		displayName: 'Delay Message (Ms)',
+		name: 'delayMessage',
+		type: 'number',
+		default: 0,
+		description: 'Delay in milliseconds before sending the message',
+		displayOptions: {
+			show: {
+				resource: ['interactiveMessage'],
+				operation: [
+					'sendButtonActions',
+					'sendButtonList',
+					'sendButtonOtp',
+					'sendButtonPix',
+					'sendCarousel',
+					'sendOptionList',
+				],
+			},
+		},
+		routing: {
+			send: { type: 'body', property: 'delayMessage' },
+		},
+	},
+	// Delay Typing (all operations)
+	{
+		displayName: 'Delay Typing (Seconds)',
+		name: 'delayTyping',
+		type: 'number',
+		default: 0,
+		description: 'Show typing indicator for this many seconds before sending',
+		displayOptions: {
+			show: {
+				resource: ['interactiveMessage'],
+				operation: [
+					'sendButtonActions',
+					'sendButtonList',
+					'sendButtonOtp',
+					'sendButtonPix',
+					'sendCarousel',
+					'sendOptionList',
+				],
+			},
+		},
+		routing: {
+			send: { type: 'body', property: 'delayTyping' },
+		},
+	},
+	// Message ID / Reply (all operations)
+	{
+		displayName: 'Message ID (Reply)',
+		name: 'messageId',
+		type: 'string',
+		default: '',
+		description: 'Message ID to reply to',
+		displayOptions: {
+			show: {
+				resource: ['interactiveMessage'],
+				operation: [
+					'sendButtonActions',
+					'sendButtonList',
+					'sendButtonOtp',
+					'sendButtonPix',
+					'sendCarousel',
+					'sendOptionList',
+				],
+			},
+		},
+		routing: {
+			send: { type: 'body', property: 'messageId' },
 		},
 	},
 
@@ -184,6 +257,25 @@ export const interactiveMessageDescription: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'image',
+			},
+		},
+	},
+	{
+		displayName: 'Video',
+		name: 'video',
+		type: 'string',
+		default: '',
+		description: 'Video URL or base64 (alternative to image)',
+		displayOptions: {
+			show: {
+				resource: ['interactiveMessage'],
+				operation: ['sendButtonList'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'video',
 			},
 		},
 	},
@@ -289,6 +381,81 @@ export const interactiveMessageDescription: INodeProperties[] = [
 		},
 	},
 	{
+		displayName: 'Document',
+		name: 'document',
+		type: 'string',
+		default: '',
+		description: 'Document URL or base64',
+		displayOptions: {
+			show: {
+				resource: ['interactiveMessage'],
+				operation: ['sendButtonActions'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'document',
+			},
+		},
+	},
+	{
+		displayName: 'Document Filename',
+		name: 'documentFilename',
+		type: 'string',
+		default: '',
+		displayOptions: {
+			show: {
+				resource: ['interactiveMessage'],
+				operation: ['sendButtonActions'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'documentFilename',
+			},
+		},
+	},
+	{
+		displayName: 'Image',
+		name: 'image',
+		type: 'string',
+		default: '',
+		description: 'Image URL or base64',
+		displayOptions: {
+			show: {
+				resource: ['interactiveMessage'],
+				operation: ['sendButtonActions'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'image',
+			},
+		},
+	},
+	{
+		displayName: 'Video',
+		name: 'video',
+		type: 'string',
+		default: '',
+		description: 'Video URL or base64',
+		displayOptions: {
+			show: {
+				resource: ['interactiveMessage'],
+				operation: ['sendButtonActions'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'video',
+			},
+		},
+	},
+	{
 		displayName: 'Buttons',
 		name: 'buttonActions',
 		type: 'fixedCollection',
@@ -341,20 +508,28 @@ export const interactiveMessageDescription: INodeProperties[] = [
 						type: 'options',
 						options: [
 							{
-								name: 'Quick Reply',
-								value: 'quick_reply',
-							},
-							{
-								name: 'CTA URL',
-								value: 'cta_url',
-							},
-							{
 								name: 'CTA Call',
 								value: 'cta_call',
 							},
 							{
 								name: 'CTA Copy',
 								value: 'cta_copy',
+							},
+							{
+								name: 'CTA URL',
+								value: 'cta_url',
+							},
+							{
+								name: 'Payment Info',
+								value: 'payment_info',
+							},
+							{
+								name: 'Quick Reply',
+								value: 'quick_reply',
+							},
+							{
+								name: 'Review and Pay',
+								value: 'review_and_pay',
 							},
 						],
 						default: 'quick_reply',
@@ -493,6 +668,12 @@ export const interactiveMessageDescription: INodeProperties[] = [
 								name: 'rowValues',
 								values: [
 									{
+										displayName: 'Description',
+										name: 'description',
+										type: 'string',
+										default: '',
+									},
+									{
 										displayName: 'ID',
 										name: 'id',
 										type: 'string',
@@ -505,12 +686,6 @@ export const interactiveMessageDescription: INodeProperties[] = [
 										type: 'string',
 										default: '',
 										required: true,
-									},
-									{
-										displayName: 'Description',
-										name: 'description',
-										type: 'string',
-										default: '',
 									},
 								],
 							},
@@ -787,8 +962,8 @@ export const interactiveMessageDescription: INodeProperties[] = [
 		name: 'cardType',
 		type: 'options',
 		options: [
-			{ name: 'Horizontal Scroll Cards', value: 'HSCROLL_CARDS' },
 			{ name: 'Album Image', value: 'ALBUM_IMAGE' },
+			{ name: 'Horizontal Scroll Cards', value: 'HSCROLL_CARDS' },
 		],
 		default: 'HSCROLL_CARDS',
 		displayOptions: {
@@ -824,27 +999,12 @@ export const interactiveMessageDescription: INodeProperties[] = [
 				name: 'cardValues',
 				values: [
 					{
-						displayName: 'Body Text',
-						name: 'bodyText',
+						displayName: 'Body',
+						name: 'body',
 						type: 'string',
 						default: '',
 						required: true,
-					},
-					{
-						displayName: 'Media URL',
-						name: 'mediaUrl',
-						type: 'string',
-						default: '',
-					},
-					{
-						displayName: 'Media Type',
-						name: 'mediaType',
-						type: 'options',
-						options: [
-							{ name: 'Image', value: 'image' },
-							{ name: 'Video', value: 'video' },
-						],
-						default: 'image',
+						description: 'Card body text',
 					},
 					{
 						displayName: 'Buttons',
@@ -860,6 +1020,13 @@ export const interactiveMessageDescription: INodeProperties[] = [
 								name: 'buttonValues',
 								values: [
 									{
+										displayName: 'Copy Code',
+										name: 'copyCode',
+										type: 'string',
+										default: '',
+										description: 'Code to copy for cta_copy type buttons',
+									},
+									{
 										displayName: 'ID',
 										name: 'id',
 										type: 'string',
@@ -874,12 +1041,21 @@ export const interactiveMessageDescription: INodeProperties[] = [
 										required: true,
 									},
 									{
+										displayName: 'Phone',
+										name: 'phone',
+										type: 'string',
+										default: '',
+										description: 'Phone number for cta_call type buttons',
+									},
+									{
 										displayName: 'Type',
 										name: 'type',
 										type: 'options',
 										options: [
-											{ name: 'Quick Reply', value: 'quick_reply' },
+											{ name: 'CTA Call', value: 'cta_call' },
+											{ name: 'CTA Copy', value: 'cta_copy' },
 											{ name: 'CTA URL', value: 'cta_url' },
+											{ name: 'Quick Reply', value: 'quick_reply' },
 										],
 										default: 'quick_reply',
 									},
@@ -888,10 +1064,48 @@ export const interactiveMessageDescription: INodeProperties[] = [
 										name: 'url',
 										type: 'string',
 										default: '',
+										description: 'URL for cta_url type buttons',
 									},
 								],
 							},
 						],
+					},
+					{
+						displayName: 'Footer',
+						name: 'footer',
+						type: 'string',
+						default: '',
+						description: 'Card footer text',
+					},
+					{
+						displayName: 'Header',
+						name: 'header',
+						type: 'string',
+						default: '',
+						description: 'Card header text',
+					},
+					{
+						displayName: 'Media Base64',
+						name: 'mediaBase64',
+						type: 'string',
+						default: '',
+						description: 'Base64 encoded media (alternative to mediaUrl)',
+					},
+					{
+						displayName: 'Media Type',
+						name: 'mediaType',
+						type: 'options',
+						options: [
+							{ name: 'Image', value: 'image' },
+							{ name: 'Video', value: 'video' },
+						],
+						default: 'image',
+					},
+					{
+						displayName: 'Media URL',
+						name: 'mediaUrl',
+						type: 'string',
+						default: '',
 					},
 				],
 			},
