@@ -21,11 +21,12 @@ export const messageField: INodeProperties = {
 };
 
 export const delayMessageField: INodeProperties = {
-	displayName: 'Delay (Ms)',
+	displayName: 'Delay Message (Seconds)',
 	name: 'delayMessage',
 	type: 'number',
 	default: 0,
-	description: 'Delay in milliseconds before sending the message',
+	typeOptions: { minValue: 0 },
+	description: 'Delay in seconds before sending the message (0 = API default 1-3s random)',
 };
 
 export const messageIdField: INodeProperties = {
@@ -109,7 +110,8 @@ const additionalFieldDefs: Record<string, INodeProperties> = {
 		name: 'delayTyping',
 		type: 'number',
 		default: 0,
-		description: 'Show typing indicator for this many seconds before sending',
+		typeOptions: { minValue: 0, maxValue: 15 },
+		description: 'Show typing indicator for this many seconds before sending (1-15, 0 = off)',
 		routing: {
 			send: { type: 'body', property: 'delayTyping' },
 		},
@@ -192,6 +194,17 @@ const additionalFieldDefs: Record<string, INodeProperties> = {
 		description: 'Whether to reply privately in group chats',
 		routing: {
 			send: { type: 'body', property: 'privateAnswer' },
+		},
+	},
+	scheduledFor: {
+		displayName: 'Scheduled For',
+		name: 'scheduledFor',
+		type: 'dateTime',
+		default: '',
+		description:
+			'ISO 8601 timestamp for scheduled delivery (overrides Delay Message). Must be in the future.',
+		routing: {
+			send: { type: 'body', property: 'scheduledFor' },
 		},
 	},
 	viewOnce: {
