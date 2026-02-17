@@ -114,11 +114,12 @@ export const interactiveMessageDescription: INodeProperties[] = [
 
 	// Delay Message (all operations)
 	{
-		displayName: 'Delay Message (Ms)',
+		displayName: 'Delay Message (Seconds)',
 		name: 'delayMessage',
 		type: 'number',
 		default: 0,
-		description: 'Delay in milliseconds before sending the message',
+		typeOptions: { minValue: 0 },
+		description: 'Delay in seconds before sending the message (0 = API default 1-3s random)',
 		displayOptions: {
 			show: {
 				resource: ['interactiveMessage'],
@@ -136,17 +137,19 @@ export const interactiveMessageDescription: INodeProperties[] = [
 			send: { type: 'body', property: 'delayMessage' },
 		},
 	},
-	// Delay Typing (operations that support it per OpenAPI)
+	// Delay Typing (all operations)
 	{
 		displayName: 'Delay Typing (Seconds)',
 		name: 'delayTyping',
 		type: 'number',
 		default: 0,
-		description: 'Show typing indicator for this many seconds before sending',
+		typeOptions: { minValue: 0, maxValue: 15 },
+		description: 'Show typing indicator for this many seconds before sending (1-15, 0 = off)',
 		displayOptions: {
 			show: {
 				resource: ['interactiveMessage'],
 				operation: [
+					'sendButtonActions',
 					'sendButtonList',
 					'sendButtonOtp',
 					'sendButtonPix',
@@ -157,6 +160,31 @@ export const interactiveMessageDescription: INodeProperties[] = [
 		},
 		routing: {
 			send: { type: 'body', property: 'delayTyping' },
+		},
+	},
+	// Scheduled For (all operations)
+	{
+		displayName: 'Scheduled For',
+		name: 'scheduledFor',
+		type: 'dateTime',
+		default: '',
+		description:
+			'ISO 8601 timestamp for scheduled delivery (overrides Delay Message). Must be in the future.',
+		displayOptions: {
+			show: {
+				resource: ['interactiveMessage'],
+				operation: [
+					'sendButtonActions',
+					'sendButtonList',
+					'sendButtonOtp',
+					'sendButtonPix',
+					'sendCarousel',
+					'sendOptionList',
+				],
+			},
+		},
+		routing: {
+			send: { type: 'body', property: 'scheduledFor' },
 		},
 	},
 	// Message ID / Reply (all operations)

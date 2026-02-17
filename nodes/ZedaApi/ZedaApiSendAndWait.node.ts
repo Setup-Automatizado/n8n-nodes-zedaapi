@@ -461,18 +461,21 @@ export class ZedaApiSendAndWait implements INodeType {
 							'Whether to automatically append the response link to the WhatsApp message',
 					},
 					{
-						displayName: 'Delay Message (Ms)',
+						displayName: 'Delay Message (Seconds)',
 						name: 'delayMessage',
 						type: 'number',
 						default: 0,
-						description: 'Delay in milliseconds before sending',
+						typeOptions: { minValue: 0 },
+						description: 'Delay in seconds before sending (0 = API default 1-3s random)',
 					},
 					{
 						displayName: 'Delay Typing (Seconds)',
 						name: 'delayTyping',
 						type: 'number',
 						default: 0,
-						description: 'Show typing indicator for this many seconds before sending',
+						typeOptions: { minValue: 0, maxValue: 15 },
+						description:
+							'Show typing indicator for this many seconds before sending (1-15, 0 = off)',
 					},
 					{
 						displayName: 'Response Link Text',
@@ -480,6 +483,13 @@ export class ZedaApiSendAndWait implements INodeType {
 						type: 'string',
 						default: 'Click here to respond',
 						description: 'The clickable text shown before the response URL',
+					},
+					{
+						displayName: 'Scheduled For',
+						name: 'scheduledFor',
+						type: 'dateTime',
+						default: '',
+						description: 'ISO 8601 timestamp for scheduled delivery (overrides Delay Message)',
 					},
 				],
 			},
@@ -508,6 +518,7 @@ export class ZedaApiSendAndWait implements INodeType {
 			appendLink?: boolean;
 			delayMessage?: number;
 			delayTyping?: number;
+			scheduledFor?: string;
 			linkText?: string;
 		};
 
@@ -535,6 +546,7 @@ export class ZedaApiSendAndWait implements INodeType {
 				message: fullMessage,
 				...(options.delayMessage ? { delayMessage: options.delayMessage } : {}),
 				...(options.delayTyping ? { delayTyping: options.delayTyping } : {}),
+				...(options.scheduledFor ? { scheduledFor: options.scheduledFor } : {}),
 			},
 			headers: {
 				Accept: 'application/json',

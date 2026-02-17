@@ -210,11 +210,12 @@ export const messageActionDescription: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Delay Message (Ms)',
+		displayName: 'Delay Message (Seconds)',
 		name: 'delayMessage',
 		type: 'number',
 		default: 0,
-		description: 'Delay in milliseconds before forwarding',
+		typeOptions: { minValue: 0 },
+		description: 'Delay in seconds before forwarding (0 = API default 1-3s random)',
 		displayOptions: {
 			show: {
 				resource: ['messageAction'],
@@ -233,7 +234,8 @@ export const messageActionDescription: INodeProperties[] = [
 		name: 'delayTyping',
 		type: 'number',
 		default: 0,
-		description: 'Show typing indicator for this many seconds before forwarding',
+		typeOptions: { minValue: 0, maxValue: 15 },
+		description: 'Show typing indicator for this many seconds before forwarding (1-15, 0 = off)',
 		displayOptions: {
 			show: {
 				resource: ['messageAction'],
@@ -244,6 +246,26 @@ export const messageActionDescription: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'delayTyping',
+			},
+		},
+	},
+	{
+		displayName: 'Scheduled For',
+		name: 'scheduledFor',
+		type: 'dateTime',
+		default: '',
+		description:
+			'ISO 8601 timestamp for scheduled delivery (overrides Delay Message). Must be in the future.',
+		displayOptions: {
+			show: {
+				resource: ['messageAction'],
+				operation: ['forwardMessage'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'scheduledFor',
 			},
 		},
 	},

@@ -24,11 +24,12 @@ const phoneField = (resource: string, operations: string[]): INodeProperties => 
 });
 
 const delayMessageField = (resource: string, operations: string[]): INodeProperties => ({
-	displayName: 'Delay Message (Ms)',
+	displayName: 'Delay Message (Seconds)',
 	name: 'delayMessage',
 	type: 'number',
 	default: 0,
-	description: 'Delay in milliseconds before sending the message',
+	typeOptions: { minValue: 0 },
+	description: 'Delay in seconds before sending the message (0 = API default 1-3s random)',
 	displayOptions: {
 		show: {
 			resource: [resource],
@@ -1052,6 +1053,7 @@ export const messageDescription: INodeProperties[] = [
 			'mentionedAll',
 			'messageId',
 			'privateAnswer',
+			'scheduledFor',
 		],
 	),
 	makeAdditionalFields(
@@ -1065,6 +1067,7 @@ export const messageDescription: INodeProperties[] = [
 			'mentionedAll',
 			'messageId',
 			'privateAnswer',
+			'scheduledFor',
 			'viewOnce',
 		],
 	),
@@ -1079,12 +1082,21 @@ export const messageDescription: INodeProperties[] = [
 			'mentionedAll',
 			'messageId',
 			'privateAnswer',
+			'scheduledFor',
 		],
 	),
 	makeAdditionalFields(
 		'message',
 		['sendLocation'],
-		['delayTyping', 'duration', 'groupMentioned', 'mentioned', 'mentionedAll', 'messageId'],
+		[
+			'delayTyping',
+			'duration',
+			'groupMentioned',
+			'mentioned',
+			'mentionedAll',
+			'messageId',
+			'scheduledFor',
+		],
 	),
-	makeAdditionalFields('message', ['sendLink'], ['delayTyping', 'messageId']),
+	makeAdditionalFields('message', ['sendLink'], ['delayTyping', 'messageId', 'scheduledFor']),
 ];

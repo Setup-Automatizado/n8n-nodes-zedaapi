@@ -242,11 +242,12 @@ export const statusDescription: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Delay Message (Ms)',
+		displayName: 'Delay Message (Seconds)',
 		name: 'delayMessage',
 		type: 'number',
 		default: 0,
-		description: 'Delay in milliseconds before posting status',
+		typeOptions: { minValue: 0 },
+		description: 'Delay in seconds before posting status (0 = API default 1-3s random)',
 		displayOptions: {
 			show: {
 				resource: ['status'],
@@ -255,6 +256,23 @@ export const statusDescription: INodeProperties[] = [
 		},
 		routing: {
 			send: { type: 'body', property: 'delayMessage' },
+		},
+	},
+	{
+		displayName: 'Scheduled For',
+		name: 'scheduledFor',
+		type: 'dateTime',
+		default: '',
+		description:
+			'ISO 8601 timestamp for scheduled delivery (overrides Delay Message). Must be in the future.',
+		displayOptions: {
+			show: {
+				resource: ['status'],
+				operation: ['sendAudioStatus', 'sendImageStatus', 'sendTextStatus', 'sendVideoStatus'],
+			},
+		},
+		routing: {
+			send: { type: 'body', property: 'scheduledFor' },
 		},
 	},
 ];

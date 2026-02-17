@@ -232,11 +232,12 @@ export const eventDescription: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Delay Message (Ms)',
+		displayName: 'Delay Message (Seconds)',
 		name: 'delayMessage',
 		type: 'number',
 		default: 0,
-		description: 'Delay in milliseconds before sending',
+		typeOptions: { minValue: 0 },
+		description: 'Delay in seconds before sending (0 = API default 1-3s random)',
 		displayOptions: {
 			show: {
 				resource: ['event'],
@@ -255,7 +256,8 @@ export const eventDescription: INodeProperties[] = [
 		name: 'delayTyping',
 		type: 'number',
 		default: 0,
-		description: 'Show typing indicator before sending',
+		typeOptions: { minValue: 0, maxValue: 15 },
+		description: 'Show typing indicator before sending (1-15, 0 = off)',
 		displayOptions: {
 			show: {
 				resource: ['event'],
@@ -285,6 +287,26 @@ export const eventDescription: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'messageId',
+			},
+		},
+	},
+	{
+		displayName: 'Scheduled For',
+		name: 'scheduledFor',
+		type: 'dateTime',
+		default: '',
+		description:
+			'ISO 8601 timestamp for scheduled delivery (overrides Delay Message). Must be in the future.',
+		displayOptions: {
+			show: {
+				resource: ['event'],
+				operation: ['sendEvent'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'scheduledFor',
 			},
 		},
 	},
@@ -424,11 +446,12 @@ export const eventDescription: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Delay Message (Ms)',
+		displayName: 'Delay Message (Seconds)',
 		name: 'delayMessage',
 		type: 'number',
 		default: 0,
-		description: 'Delay in milliseconds before sending',
+		typeOptions: { minValue: 0 },
+		description: 'Delay in seconds before sending (0 = API default 1-3s random)',
 		displayOptions: {
 			show: {
 				resource: ['event'],
@@ -447,7 +470,8 @@ export const eventDescription: INodeProperties[] = [
 		name: 'delayTyping',
 		type: 'number',
 		default: 0,
-		description: 'Show typing indicator before sending',
+		typeOptions: { minValue: 0, maxValue: 15 },
+		description: 'Show typing indicator before sending (1-15, 0 = off)',
 		displayOptions: {
 			show: {
 				resource: ['event'],
@@ -458,6 +482,26 @@ export const eventDescription: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'delayTyping',
+			},
+		},
+	},
+	{
+		displayName: 'Scheduled For',
+		name: 'scheduledFor',
+		type: 'dateTime',
+		default: '',
+		description:
+			'ISO 8601 timestamp for scheduled delivery (overrides Delay Message). Must be in the future.',
+		displayOptions: {
+			show: {
+				resource: ['event'],
+				operation: ['editEvent'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'scheduledFor',
 			},
 		},
 	},
@@ -527,11 +571,12 @@ export const eventDescription: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Delay Message (Ms)',
+		displayName: 'Delay Message (Seconds)',
 		name: 'delayMessage',
 		type: 'number',
 		default: 0,
-		description: 'Delay in milliseconds before sending',
+		typeOptions: { minValue: 0 },
+		description: 'Delay in seconds before sending (0 = API default 1-3s random)',
 		displayOptions: {
 			show: {
 				resource: ['event'],
@@ -550,7 +595,8 @@ export const eventDescription: INodeProperties[] = [
 		name: 'delayTyping',
 		type: 'number',
 		default: 0,
-		description: 'Show typing indicator before sending',
+		typeOptions: { minValue: 0, maxValue: 15 },
+		description: 'Show typing indicator before sending (1-15, 0 = off)',
 		displayOptions: {
 			show: {
 				resource: ['event'],
@@ -561,6 +607,26 @@ export const eventDescription: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'delayTyping',
+			},
+		},
+	},
+	{
+		displayName: 'Scheduled For',
+		name: 'scheduledFor',
+		type: 'dateTime',
+		default: '',
+		description:
+			'ISO 8601 timestamp for scheduled delivery (overrides Delay Message). Must be in the future.',
+		displayOptions: {
+			show: {
+				resource: ['event'],
+				operation: ['sendEventResponse'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'scheduledFor',
 			},
 		},
 	},

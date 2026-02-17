@@ -141,11 +141,12 @@ export const pollDescription: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Delay Message (Ms)',
+		displayName: 'Delay Message (Seconds)',
 		name: 'delayMessage',
 		type: 'number',
 		default: 0,
-		description: 'Delay in milliseconds before sending',
+		typeOptions: { minValue: 0 },
+		description: 'Delay in seconds before sending (0 = API default 1-3s random)',
 		displayOptions: {
 			show: {
 				resource: ['poll'],
@@ -164,7 +165,8 @@ export const pollDescription: INodeProperties[] = [
 		name: 'delayTyping',
 		type: 'number',
 		default: 0,
-		description: 'Show typing indicator before sending',
+		typeOptions: { minValue: 0, maxValue: 15 },
+		description: 'Show typing indicator before sending (1-15, 0 = off)',
 		displayOptions: {
 			show: {
 				resource: ['poll'],
@@ -194,6 +196,26 @@ export const pollDescription: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'messageId',
+			},
+		},
+	},
+	{
+		displayName: 'Scheduled For',
+		name: 'scheduledFor',
+		type: 'dateTime',
+		default: '',
+		description:
+			'ISO 8601 timestamp for scheduled delivery (overrides Delay Message). Must be in the future.',
+		displayOptions: {
+			show: {
+				resource: ['poll'],
+				operation: ['sendPoll'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'scheduledFor',
 			},
 		},
 	},
@@ -243,11 +265,12 @@ export const pollDescription: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Delay Message (Ms)',
+		displayName: 'Delay Message (Seconds)',
 		name: 'delayMessage',
 		type: 'number',
 		default: 0,
-		description: 'Delay in milliseconds before sending',
+		typeOptions: { minValue: 0 },
+		description: 'Delay in seconds before sending (0 = API default 1-3s random)',
 		displayOptions: {
 			show: {
 				resource: ['poll'],
@@ -258,6 +281,26 @@ export const pollDescription: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'delayMessage',
+			},
+		},
+	},
+	{
+		displayName: 'Scheduled For',
+		name: 'scheduledFor',
+		type: 'dateTime',
+		default: '',
+		description:
+			'ISO 8601 timestamp for scheduled delivery (overrides Delay Message). Must be in the future.',
+		displayOptions: {
+			show: {
+				resource: ['poll'],
+				operation: ['sendPollVote'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'scheduledFor',
 			},
 		},
 	},
