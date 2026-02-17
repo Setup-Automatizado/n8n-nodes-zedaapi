@@ -1,4 +1,4 @@
-import type { INodeProperties } from 'n8n-workflow';
+import type { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 
 export const instanceDescription: INodeProperties[] = [
 	{
@@ -64,6 +64,45 @@ export const instanceDescription: INodeProperties[] = [
 					request: {
 						method: 'GET',
 						url: '/qr-code/image',
+					},
+					output: {
+						postReceive: [
+							async function (
+								this: void,
+								items: INodeExecutionData[],
+							): Promise<INodeExecutionData[]> {
+								const item = items[0];
+								const imageDataUri = item.json?.image as string | undefined;
+
+								if (!imageDataUri || !imageDataUri.startsWith('data:image/')) {
+									return items;
+								}
+
+								const commaIndex = imageDataUri.indexOf(',');
+								if (commaIndex === -1) {
+									return items;
+								}
+
+								const base64Data = imageDataUri.substring(commaIndex + 1);
+								const headerPart = imageDataUri.substring(5, commaIndex);
+								const mimeType = headerPart.split(';')[0];
+								const extension = mimeType.split('/')[1];
+
+								return [
+									{
+										json: item.json,
+										binary: {
+											data: {
+												data: base64Data,
+												mimeType,
+												fileName: `qrcode.${extension}`,
+												fileExtension: extension,
+											},
+										},
+									},
+								];
+							},
+						],
 					},
 				},
 			},
