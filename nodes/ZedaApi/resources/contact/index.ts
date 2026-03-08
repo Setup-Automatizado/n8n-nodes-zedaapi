@@ -13,6 +13,18 @@ export const contactDescription: INodeProperties[] = [
 		},
 		options: [
 			{
+				name: 'Add Contact',
+				value: 'addContact',
+				description: 'Add a contact to the address book',
+				action: 'Add a contact',
+				routing: {
+					request: {
+						method: 'POST',
+						url: '/add-contact',
+					},
+				},
+			},
+			{
 				name: 'Block/Unblock',
 				value: 'modifyBlocked',
 				description: 'Block or unblock a contact',
@@ -81,6 +93,30 @@ export const contactDescription: INodeProperties[] = [
 					request: {
 						method: 'POST',
 						url: '/phone-exists-batch',
+					},
+				},
+			},
+			{
+				name: 'Remove Contact',
+				value: 'removeContact',
+				description: 'Remove a contact from the address book',
+				action: 'Remove a contact',
+				routing: {
+					request: {
+						method: 'POST',
+						url: '/remove-contact',
+					},
+				},
+			},
+			{
+				name: 'Resolve LIDs',
+				value: 'resolveLids',
+				description: 'Resolve LIDs for phone numbers',
+				action: 'Resolve lids for phones',
+				routing: {
+					request: {
+						method: 'POST',
+						url: '/resolve-lids',
 					},
 				},
 			},
@@ -246,6 +282,76 @@ export const contactDescription: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'action',
+			},
+		},
+	},
+
+	// ------ Add Contact fields ------
+	{
+		displayName: 'Phone',
+		name: 'phone',
+		type: 'string',
+		default: '',
+		required: true,
+		placeholder: 'e.g. 5511999999999',
+		description: 'The phone number to add in E.164 format (without + sign)',
+		displayOptions: {
+			show: {
+				resource: ['contact'],
+				operation: ['addContact'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'phone',
+			},
+		},
+	},
+
+	// ------ Remove Contact fields ------
+	{
+		displayName: 'Phone',
+		name: 'phone',
+		type: 'string',
+		default: '',
+		required: true,
+		placeholder: 'e.g. 5511999999999',
+		description: 'The phone number to remove in E.164 format (without + sign)',
+		displayOptions: {
+			show: {
+				resource: ['contact'],
+				operation: ['removeContact'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'phone',
+			},
+		},
+	},
+
+	// ------ Resolve LIDs fields ------
+	{
+		displayName: 'Phones',
+		name: 'phones',
+		type: 'string',
+		default: '',
+		required: true,
+		placeholder: 'e.g. 5511999999999,5511888888888',
+		description: 'Comma-separated list of phone numbers to resolve LIDs for',
+		displayOptions: {
+			show: {
+				resource: ['contact'],
+				operation: ['resolveLids'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'phones',
+				value: '={{$value.split(",").map(p => p.trim())}}',
 			},
 		},
 	},

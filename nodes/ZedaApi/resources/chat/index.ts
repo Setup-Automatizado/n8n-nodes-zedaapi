@@ -24,6 +24,18 @@ export const chatDescription: INodeProperties[] = [
 					},
 				},
 			},
+			{
+				name: 'Save Chat Notes',
+				value: 'saveChatNotes',
+				description: 'Save notes for a chat',
+				action: 'Save chat notes',
+				routing: {
+					request: {
+						method: 'POST',
+						url: '=/chats/{{$parameter.phone}}/notes',
+					},
+				},
+			},
 		],
 		default: 'listChats',
 	},
@@ -64,6 +76,46 @@ export const chatDescription: INodeProperties[] = [
 			send: {
 				type: 'query',
 				property: 'pageSize',
+			},
+		},
+	},
+
+	// ------ Save Chat Notes fields ------
+	{
+		displayName: 'Phone',
+		name: 'phone',
+		type: 'string',
+		default: '',
+		required: true,
+		placeholder: 'e.g. 5511999999999',
+		description: 'The phone number of the chat in E.164 format (without + sign)',
+		displayOptions: {
+			show: {
+				resource: ['chat'],
+				operation: ['saveChatNotes'],
+			},
+		},
+	},
+	{
+		displayName: 'Notes',
+		name: 'notes',
+		type: 'string',
+		default: '',
+		required: true,
+		typeOptions: {
+			rows: 4,
+		},
+		description: 'The notes to save for the chat',
+		displayOptions: {
+			show: {
+				resource: ['chat'],
+				operation: ['saveChatNotes'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'notes',
 			},
 		},
 	},
