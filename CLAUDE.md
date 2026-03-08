@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**n8n-nodes-zedaapi** is a complete n8n community node package that integrates with the [Zeda API](https://github.com/Setup-Automatizado/zedaapi) (whatsmeow-based WhatsApp API). It provides **131 operations across 18 resources** plus a webhook trigger node for receiving WhatsApp events.
+**n8n-nodes-zedaapi** is a complete n8n community node package that integrates with the [Zeda API](https://github.com/Setup-Automatizado/zedaapi) (whatsmeow-based WhatsApp API). It provides **163 operations across 19 resources** plus a webhook trigger node for receiving WhatsApp events.
 
 **Linked repository**: `git@github.com:Setup-Automatizado/zedaapi.git` (the WhatsApp API backend this node integrates with)
 
@@ -25,7 +25,7 @@ CI runs `lint` then `build` on Node.js v22.
 
 ### Nodes
 
-1. **ZedaApi** (`nodes/ZedaApi/ZedaApi.node.ts`) — Main declarative node with 18 resources, `usableAsTool: true` for AI Agents
+1. **ZedaApi** (`nodes/ZedaApi/ZedaApi.node.ts`) — Main declarative node with 19 resources, `usableAsTool: true` for AI Agents
 2. **ZedaApiTrigger** (`nodes/ZedaApi/ZedaApiTrigger.node.ts`) — Webhook trigger for receiving WhatsApp events (messages, delivery, read receipts, reactions, etc.)
 
 ### Authentication
@@ -38,7 +38,7 @@ All operation URLs are relative suffixes (e.g., `/send-text`, `/groups`).
 
 Credential: `credentials/ZedaApi.credentials.ts` — fields: `baseUrl`, `instanceId`, `token`
 
-### Resources & Operations (131 total)
+### Resources & Operations (163 total)
 
 | Resource | Operations | Key Endpoints |
 |---|---|---|
@@ -48,8 +48,9 @@ Credential: `credentials/ZedaApi.credentials.ts` — fields: `baseUrl`, `instanc
 | Poll | 2 | send-poll, send-poll-vote |
 | Event | 3 | send-event, send-edit-event, send-event-response |
 | Status/Stories | 4 | send-text-status, send-image-status, send-audio-status, send-video-status |
-| Contact | 6 | contacts, phone-exists, phone-exists-batch, contact metadata, profile-picture, modify-blocked |
-| Chat | 1 | chats |
+| Business | 28 | profile, hours, categories, address, description, email, websites, tags CRUD, products CRUD, catalog config, collections CRUD |
+| Contact | 9 | contacts, phone-exists, phone-exists-batch, contact metadata, profile-picture, modify-blocked, add-contact, remove-contact, resolve-lids |
+| Chat | 2 | chats, save-chat-notes |
 | Group | 19 | CRUD, participants, admins, invitations, metadata, settings |
 | Community | 9 | CRUD, link/unlink groups, metadata, settings, invitations |
 | Newsletter | 18 | CRUD, follow/unfollow, mute/unmute, admin management, search, transfer ownership |
@@ -75,8 +76,9 @@ nodes/ZedaApi/
 │   ├── poll/index.ts               # 2 poll operations
 │   ├── event/index.ts              # 3 event operations
 │   ├── status/index.ts             # 4 status/stories operations
-│   ├── contact/index.ts            # 6 contact operations
-│   ├── chat/index.ts               # 1 chat operation
+│   ├── business/index.ts            # 28 business operations
+│   ├── contact/index.ts            # 9 contact operations
+│   ├── chat/index.ts               # 2 chat operations
 │   ├── group/index.ts              # 19 group operations
 │   ├── community/index.ts          # 9 community operations
 │   ├── newsletter/index.ts         # 18 newsletter operations

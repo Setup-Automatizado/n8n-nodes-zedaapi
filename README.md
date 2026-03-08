@@ -4,7 +4,7 @@
 
 **The most complete WhatsApp integration for n8n**
 
-131 operations &middot; 18 resources &middot; AI Agent ready
+163 operations &middot; 19 resources &middot; AI Agent ready
 
 [![npm version](https://img.shields.io/npm/v/@setup-automatizado/n8n-nodes-zedaapi?style=flat-square&color=CB3837)](https://www.npmjs.com/package/@setup-automatizado/n8n-nodes-zedaapi)
 [![license](https://img.shields.io/npm/l/@setup-automatizado/n8n-nodes-zedaapi?style=flat-square&color=blue)](LICENSE)
@@ -24,7 +24,7 @@ n8n community node for [Ze da API](https://github.com/Setup-Automatizado/zedaapi
 
 **Key highlights:**
 
-- **131 operations** across **18 resources** — the most comprehensive WhatsApp node available
+- **163 operations** across **19 resources** — the most comprehensive WhatsApp node available
 - **AI Agent compatible** — `usableAsTool: true` for seamless LLM integration
 - **Webhook trigger** — receive 13 event types in real-time
 - **Declarative routing** — zero custom code, pure n8n-native implementation
@@ -154,25 +154,82 @@ N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE=true
 </details>
 
 <details>
-<summary><strong>Contact</strong> — 6 operations</summary>
+<summary><strong>Business</strong> — 28 operations</summary>
+
+**Profile (8):**
 
 | Operation | Method | Endpoint |
 |---|---|---|
-| List Contacts | GET | `/contacts` |
-| Phone Exists | GET | `/phone-exists/{phone}` |
-| Phone Exists Batch | POST | `/phone-exists-batch` |
-| Get Metadata | GET | `/contacts/{phone}/metadata` |
-| Get Profile Picture | GET | `/contacts/{phone}/profile-picture` |
-| Block/Unblock | POST | `/modify-blocked` |
+| Get Available Categories | GET | `/business/available-categories` |
+| Get Business Profile | GET | `/business/profile` |
+| Set Business Hours | POST | `/business/hours` |
+| Set Categories | POST | `/business/categories` |
+| Set Company Address | POST | `/business/company-address` |
+| Set Company Description | POST | `/business/company-description` |
+| Set Company Email | POST | `/business/company-email` |
+| Set Company Websites | POST | `/business/company-websites` |
+
+**Tags/Labels (7):**
+
+| Operation | Method | Endpoint |
+|---|---|---|
+| Add Tag to Chat | PUT | `/chats/{phone}/tags/{tag}/add` |
+| Create Tag | POST | `/business/create-tag` |
+| Delete Tag | DELETE | `/business/tag/{tagId}` |
+| Edit Tag | POST | `/business/edit-tag/{tagId}` |
+| Get Tag Colors | GET | `/business/tags/colors` |
+| List Tags | GET | `/tags` |
+| Remove Tag From Chat | PUT | `/chats/{phone}/tags/{tag}/remove` |
+
+**Products/Catalog (6):**
+
+| Operation | Method | Endpoint |
+|---|---|---|
+| Create Product | POST | `/products` |
+| Delete Product | DELETE | `/products/{productId}` |
+| Get Product | GET | `/products/{productId}` |
+| Get Products By Phone | GET | `/catalogs/{phone}` |
+| List Products | GET | `/catalogs` |
+| Save Catalog Config | POST | `/catalogs/config` |
+
+**Collections (7):**
+
+| Operation | Method | Endpoint |
+|---|---|---|
+| Add Product to Collection | POST | `/catalogs/collection/add-product` |
+| Create Collection | POST | `/catalogs/collection` |
+| Delete Collection | DELETE | `/catalogs/collection/{collectionId}` |
+| Edit Collection | POST | `/catalogs/collection-edit/{collectionId}` |
+| List Collection Products | GET | `/catalogs/collection-products/{phone}` |
+| List Collections | GET | `/catalogs/collection` |
+| Remove Product From Collection | POST | `/catalogs/collection/remove-product` |
 
 </details>
 
 <details>
-<summary><strong>Chat</strong> — 1 operation</summary>
+<summary><strong>Contact</strong> — 9 operations</summary>
+
+| Operation | Method | Endpoint |
+|---|---|---|
+| Add Contact | POST | `/add-contact` |
+| Block/Unblock | POST | `/modify-blocked` |
+| Get Metadata | GET | `/contacts/{phone}/metadata` |
+| Get Profile Picture | GET | `/contacts/{phone}/profile-picture` |
+| List Contacts | GET | `/contacts` |
+| Phone Exists | GET | `/phone-exists/{phone}` |
+| Phone Exists Batch | POST | `/phone-exists-batch` |
+| Remove Contact | POST | `/remove-contact` |
+| Resolve LIDs | POST | `/resolve-lids` |
+
+</details>
+
+<details>
+<summary><strong>Chat</strong> — 2 operations</summary>
 
 | Operation | Method | Endpoint |
 |---|---|---|
 | List Chats | GET | `/chats` |
+| Save Chat Notes | POST | `/chats/{phone}/notes` |
 
 </details>
 
@@ -372,10 +429,10 @@ The **Ze da API Trigger** node receives real-time webhook events:
 ├── credentials/
 │   └── ZedaApi.credentials.ts        # Dual-token auth (path + header)
 ├── nodes/ZedaApi/
-│   ├── ZedaApi.node.ts                # Main declarative node (18 resources)
+│   ├── ZedaApi.node.ts                # Main declarative node (19 resources)
 │   ├── ZedaApiTrigger.node.ts         # Webhook trigger (13 events)
 │   ├── types.ts                       # TypeScript interfaces
-│   ├── resources/                     # 18 resource modules
+│   ├── resources/                     # 19 resource modules
 │   └── shared/                        # Reusable descriptions & transport
 └── icons/
     ├── zedaapi.svg                    # Light theme

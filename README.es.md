@@ -4,7 +4,7 @@
 
 **La integración WhatsApp más completa para n8n**
 
-131 operaciones &middot; 18 recursos &middot; Compatible con AI Agent
+163 operaciones &middot; 19 recursos &middot; Compatible con AI Agent
 
 [![npm version](https://img.shields.io/npm/v/@setup-automatizado/n8n-nodes-zedaapi?style=flat-square&color=CB3837)](https://www.npmjs.com/package/@setup-automatizado/n8n-nodes-zedaapi)
 [![license](https://img.shields.io/npm/l/@setup-automatizado/n8n-nodes-zedaapi?style=flat-square&color=blue)](LICENSE)
@@ -24,7 +24,7 @@ Nodo comunitario para n8n que integra con [Zé da API](https://github.com/Setup-
 
 **Características principales:**
 
-- **131 operaciones** en **18 recursos** — el nodo WhatsApp más completo disponible
+- **163 operaciones** en **19 recursos** — el nodo WhatsApp más completo disponible
 - **Compatible con AI Agent** — `usableAsTool: true` para integración con LLMs
 - **Trigger por webhook** — recibe 13 tipos de eventos en tiempo real
 - **Enrutamiento declarativo** — cero código personalizado, implementación 100% nativa de n8n
@@ -121,56 +121,285 @@ N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE=true
 </details>
 
 <details>
-<summary><strong>Encuesta</strong> — 2 | <strong>Evento</strong> — 3 | <strong>Estado/Stories</strong> — 4</summary>
+<summary><strong>Encuesta</strong> — 2 operaciones</summary>
 
-**Encuesta:** Enviar Encuesta, Votar &middot; **Evento:** Enviar, Editar, Responder &middot; **Estado:** Texto, Imagen, Audio, Video
+| Operación | Método | Endpoint |
+|---|---|---|
+| Enviar Encuesta | POST | `/send-poll` |
+| Votar en Encuesta | POST | `/send-poll-vote` |
 
 </details>
 
 <details>
-<summary><strong>Contacto</strong> — 6 | <strong>Chat</strong> — 1</summary>
+<summary><strong>Evento</strong> — 3 operaciones</summary>
 
-**Contacto:** Listar, Verificar Teléfono, Verificar por Lote, Metadatos, Foto de Perfil, Bloquear/Desbloquear &middot; **Chat:** Listar Chats
+| Operación | Método | Endpoint |
+|---|---|---|
+| Enviar Evento | POST | `/send-event` |
+| Editar Evento | POST | `/send-edit-event` |
+| Responder Evento | POST | `/send-event-response` |
+
+</details>
+
+<details>
+<summary><strong>Estado/Stories</strong> — 4 operaciones</summary>
+
+| Operación | Método | Endpoint |
+|---|---|---|
+| Enviar Estado Texto | POST | `/send-text-status` |
+| Enviar Estado Imagen | POST | `/send-image-status` |
+| Enviar Estado Audio | POST | `/send-audio-status` |
+| Enviar Estado Video | POST | `/send-video-status` |
+
+</details>
+
+<details>
+<summary><strong>Business</strong> — 28 operaciones</summary>
+
+**Perfil (8):**
+
+| Operación | Método | Endpoint |
+|---|---|---|
+| Obtener Categorías Disponibles | GET | `/business/available-categories` |
+| Obtener Perfil del Negocio | GET | `/business/profile` |
+| Establecer Horario de Atención | POST | `/business/hours` |
+| Establecer Categorías | POST | `/business/categories` |
+| Establecer Dirección de la Empresa | POST | `/business/company-address` |
+| Establecer Descripción de la Empresa | POST | `/business/company-description` |
+| Establecer Email de la Empresa | POST | `/business/company-email` |
+| Establecer Sitios Web de la Empresa | POST | `/business/company-websites` |
+
+**Tags/Etiquetas (7):**
+
+| Operación | Método | Endpoint |
+|---|---|---|
+| Agregar Tag al Chat | PUT | `/chats/{phone}/tags/{tag}/add` |
+| Crear Tag | POST | `/business/create-tag` |
+| Eliminar Tag | DELETE | `/business/tag/{tagId}` |
+| Editar Tag | POST | `/business/edit-tag/{tagId}` |
+| Obtener Colores de Tags | GET | `/business/tags/colors` |
+| Listar Tags | GET | `/tags` |
+| Quitar Tag del Chat | PUT | `/chats/{phone}/tags/{tag}/remove` |
+
+**Productos/Catálogo (6):**
+
+| Operación | Método | Endpoint |
+|---|---|---|
+| Crear Producto | POST | `/products` |
+| Eliminar Producto | DELETE | `/products/{productId}` |
+| Obtener Producto | GET | `/products/{productId}` |
+| Obtener Productos por Teléfono | GET | `/catalogs/{phone}` |
+| Listar Productos | GET | `/catalogs` |
+| Guardar Config del Catálogo | POST | `/catalogs/config` |
+
+**Colecciones (7):**
+
+| Operación | Método | Endpoint |
+|---|---|---|
+| Agregar Producto a Colección | POST | `/catalogs/collection/add-product` |
+| Crear Colección | POST | `/catalogs/collection` |
+| Eliminar Colección | DELETE | `/catalogs/collection/{collectionId}` |
+| Editar Colección | POST | `/catalogs/collection-edit/{collectionId}` |
+| Listar Productos de Colección | GET | `/catalogs/collection-products/{phone}` |
+| Listar Colecciones | GET | `/catalogs/collection` |
+| Quitar Producto de Colección | POST | `/catalogs/collection/remove-product` |
+
+</details>
+
+<details>
+<summary><strong>Contacto</strong> — 9 operaciones</summary>
+
+| Operación | Método | Endpoint |
+|---|---|---|
+| Agregar Contacto | POST | `/add-contact` |
+| Bloquear/Desbloquear | POST | `/modify-blocked` |
+| Obtener Metadatos | GET | `/contacts/{phone}/metadata` |
+| Obtener Foto de Perfil | GET | `/contacts/{phone}/profile-picture` |
+| Listar Contactos | GET | `/contacts` |
+| Verificar Teléfono | GET | `/phone-exists/{phone}` |
+| Verificar Teléfonos por Lote | POST | `/phone-exists-batch` |
+| Eliminar Contacto | POST | `/remove-contact` |
+| Resolver LIDs | POST | `/resolve-lids` |
+
+</details>
+
+<details>
+<summary><strong>Chat</strong> — 2 operaciones</summary>
+
+| Operación | Método | Endpoint |
+|---|---|---|
+| Listar Chats | GET | `/chats` |
+| Guardar Notas del Chat | POST | `/chats/{phone}/notes` |
 
 </details>
 
 <details>
 <summary><strong>Grupo</strong> — 19 operaciones</summary>
 
-Listar, Crear, Actualizar Nombre/Foto/Descripción/Configuración, Agregar/Eliminar/Aprobar/Rechazar Participante, Agregar/Eliminar Admin, Salir del Grupo, Obtener Metadatos/Metadatos Light, Obtener/Redefinir Enlace de Invitación, Obtener Metadatos de Invitación, Aceptar Invitación
+| Operación | Método | Endpoint |
+|---|---|---|
+| Listar Grupos | GET | `/groups` |
+| Crear Grupo | POST | `/create-group` |
+| Actualizar Nombre | POST | `/update-group-name` |
+| Actualizar Foto | POST | `/update-group-photo` |
+| Actualizar Descripción | POST | `/update-group-description` |
+| Actualizar Configuración | POST | `/update-group-settings` |
+| Agregar Participante | POST | `/add-participant` |
+| Eliminar Participante | POST | `/remove-participant` |
+| Aprobar Participante | POST | `/approve-participant` |
+| Rechazar Participante | POST | `/reject-participant` |
+| Agregar Admin | POST | `/add-admin` |
+| Eliminar Admin | POST | `/remove-admin` |
+| Salir del Grupo | POST | `/leave-group` |
+| Obtener Metadatos | GET | `/group-metadata/{id}` |
+| Obtener Metadatos Light | GET | `/light-group-metadata/{id}` |
+| Obtener Enlace de Invitación | POST | `/group-invitation-link/{id}` |
+| Redefinir Enlace de Invitación | POST | `/redefine-invitation-link/{id}` |
+| Obtener Metadatos de Invitación | GET | `/group-invitation-metadata` |
+| Aceptar Invitación | GET | `/accept-invite-group` |
 
 </details>
 
 <details>
-<summary><strong>Comunidad</strong> — 9 | <strong>Newsletter</strong> — 18</summary>
+<summary><strong>Comunidad</strong> — 9 operaciones</summary>
 
-**Comunidad:** Listar, Crear, Eliminar, Vincular/Desvincular Grupos, Metadatos, Descripción, Configuración, Enlace de Invitación
-
-**Newsletter:** Listar, Crear, Eliminar, Seguir/Dejar de Seguir, Silenciar/Reactivar, Metadatos, Actualizar Nombre/Descripción/Imagen/Configuración, Buscar, Gestionar Admins (Invitar/Aceptar/Eliminar/Revocar), Transferir Propiedad
-
-</details>
-
-<details>
-<summary><strong>Instancia</strong> — 10 | <strong>Perfil</strong> — 3 | <strong>Privacidad</strong> — 8</summary>
-
-**Instancia:** Estado, Código QR, Imagen QR, Info Dispositivo, Código Teléfono, Reiniciar, Desconectar, Lectura Automática, Rechazo Automático de Llamadas, Mensaje de Rechazo
-
-**Perfil:** Actualizar Nombre, Foto, Descripción
-
-**Privacidad:** Obtener Configuración, Actualizar Grupos/Última Conexión/Estado/Foto/Confirmación de Lectura/En Línea/Llamadas
+| Operación | Método | Endpoint |
+|---|---|---|
+| Listar | GET | `/communities` |
+| Crear | POST | `/communities` |
+| Eliminar | DELETE | `/communities/{id}` |
+| Vincular Grupos | POST | `/communities/link` |
+| Desvincular Grupos | POST | `/communities/unlink` |
+| Obtener Metadatos | GET | `/communities-metadata/{id}` |
+| Actualizar Descripción | POST | `/update-community-description` |
+| Actualizar Configuración | POST | `/communities/settings` |
+| Redefinir Enlace de Invitación | POST | `/redefine-invitation-link/{id}` |
 
 </details>
 
 <details>
-<summary><strong>Proxy</strong> — 6 | <strong>Cola</strong> — 4 | <strong>Estado de Mensaje</strong> — 4 | <strong>Webhook</strong> — 9</summary>
+<summary><strong>Newsletter</strong> — 18 operaciones</summary>
 
-**Proxy:** Obtener Config, Obtener Salud, Eliminar, Intercambiar, Probar, Actualizar
+| Operación | Método | Endpoint |
+|---|---|---|
+| Listar | GET | `/newsletter` |
+| Crear | POST | `/create-newsletter` |
+| Eliminar | DELETE | `/delete-newsletter` |
+| Seguir | PUT | `/follow-newsletter` |
+| Dejar de Seguir | PUT | `/unfollow-newsletter` |
+| Silenciar | PUT | `/mute-newsletter` |
+| Reactivar | PUT | `/unmute-newsletter` |
+| Obtener Metadatos | GET | `/newsletter/metadata/{id}` |
+| Actualizar Nombre | POST | `/update-newsletter-name` |
+| Actualizar Descripción | POST | `/update-newsletter-description` |
+| Actualizar Imagen | POST | `/update-newsletter-picture` |
+| Actualizar Configuración | POST | `/newsletter/settings/{id}` |
+| Buscar | POST | `/search-newsletter` |
+| Enviar Invitación Admin | POST | `/send-newsletter-admin-invite` |
+| Aceptar Invitación Admin | POST | `/newsletter/accept-admin-invite/{id}` |
+| Eliminar Admin | POST | `/newsletter/remove-admin/{id}` |
+| Revocar Invitación Admin | POST | `/newsletter/revoke-admin-invite/{id}` |
+| Transferir Propiedad | POST | `/newsletter/transfer-ownership/{id}` |
 
-**Cola:** Listar, Conteo, Limpiar, Cancelar
+</details>
 
-**Estado de Mensaje:** Obtener Estado, Estadísticas, Flush, Limpiar Caché
+<details>
+<summary><strong>Instancia</strong> — 10 operaciones</summary>
 
-**Webhook:** Actualizar Todos, Presencia, Conexión, Entrega, Desconexión, Estado de Mensaje, Notificar Enviados, Recibido+Entrega, Recepción
+| Operación | Método | Endpoint |
+|---|---|---|
+| Obtener Estado | GET | `/status` |
+| Obtener Código QR | GET | `/qr-code` |
+| Obtener Imagen QR | GET | `/qr-code/image` |
+| Obtener Info del Dispositivo | GET | `/device` |
+| Obtener Código de Teléfono | GET | `/phone-code/{phone}` |
+| Reiniciar | POST | `/restart` |
+| Desconectar | POST | `/disconnect` |
+| Actualizar Lectura Automática | PUT | `/update-auto-read-message` |
+| Actualizar Rechazo Automático de Llamadas | PUT | `/update-call-reject-auto` |
+| Actualizar Mensaje de Rechazo | PUT | `/update-call-reject-message` |
+
+</details>
+
+<details>
+<summary><strong>Perfil</strong> — 3 operaciones</summary>
+
+| Operación | Método | Endpoint |
+|---|---|---|
+| Actualizar Nombre | PUT | `/profile-name` |
+| Actualizar Foto | PUT | `/profile-picture` |
+| Actualizar Descripción | PUT | `/profile-description` |
+
+</details>
+
+<details>
+<summary><strong>Privacidad</strong> — 8 operaciones</summary>
+
+| Operación | Método | Endpoint |
+|---|---|---|
+| Obtener Configuración | GET | `/privacy-settings` |
+| Actualizar Agregar a Grupo | PUT | `/privacy-settings/group-add` |
+| Actualizar Última Conexión | PUT | `/privacy-settings/last-seen` |
+| Actualizar Estado | PUT | `/privacy-settings/status` |
+| Actualizar Foto de Perfil | PUT | `/privacy-settings/profile-photo` |
+| Actualizar Confirmación de Lectura | PUT | `/privacy-settings/read-receipts` |
+| Actualizar En Línea | PUT | `/privacy-settings/online` |
+| Actualizar Llamadas | PUT | `/privacy-settings/call-add` |
+
+</details>
+
+<details>
+<summary><strong>Proxy</strong> — 6 operaciones</summary>
+
+| Operación | Método | Endpoint |
+|---|---|---|
+| Obtener Config | GET | `/proxy` |
+| Obtener Salud | GET | `/proxy/health` |
+| Eliminar | DELETE | `/proxy` |
+| Intercambiar | POST | `/proxy/swap` |
+| Probar | POST | `/proxy/test` |
+| Actualizar | PUT | `/update-proxy` |
+
+</details>
+
+<details>
+<summary><strong>Cola</strong> — 4 operaciones</summary>
+
+| Operación | Método | Endpoint |
+|---|---|---|
+| Listar Cola | GET | `/queue` |
+| Obtener Conteo | GET | `/queue/count` |
+| Limpiar Cola | DELETE | `/queue` |
+| Cancelar Mensaje | DELETE | `/queue/{zaapId}` |
+
+</details>
+
+<details>
+<summary><strong>Estado de Mensaje</strong> — 4 operaciones</summary>
+
+| Operación | Método | Endpoint |
+|---|---|---|
+| Obtener Estado de Mensajes | GET | `/messages-status` |
+| Obtener Estadísticas | GET | `/messages-status/stats` |
+| Flush Estado | POST | `/messages-status/flush` |
+| Limpiar Caché | DELETE | `/messages-status/cache` |
+
+</details>
+
+<details>
+<summary><strong>Webhook</strong> — 9 operaciones</summary>
+
+| Operación | Método | Endpoint |
+|---|---|---|
+| Actualizar Todos los Webhooks | PUT | `/update-every-webhooks` |
+| Actualizar Webhook de Presencia | PUT | `/update-webhook-chat-presence` |
+| Actualizar Webhook de Conexión | PUT | `/update-webhook-connected` |
+| Actualizar Webhook de Entrega | PUT | `/update-webhook-delivery` |
+| Actualizar Webhook de Desconexión | PUT | `/update-webhook-disconnected` |
+| Actualizar Webhook de Estado | PUT | `/update-webhook-message-status` |
+| Actualizar Notificar Enviados | PUT | `/update-notify-sent-by-me` |
+| Actualizar Webhook Recibido+Entrega | PUT | `/update-webhook-received-delivery` |
+| Actualizar Webhook de Recepción | PUT | `/update-webhook-received` |
 
 </details>
 
@@ -192,6 +421,23 @@ El nodo **Zé da API Trigger** recibe eventos en tiempo real vía webhook:
 | Actualización de Grupo | Cambios en metadatos |
 | Voto en Encuesta | Eventos de votación |
 | Estado/Stories | Actualizaciones de estado |
+
+## Arquitectura
+
+```
+@setup-automatizado/n8n-nodes-zedaapi
+├── credentials/
+│   └── ZedaApi.credentials.ts        # Auth dual (ruta + encabezado)
+├── nodes/ZedaApi/
+│   ├── ZedaApi.node.ts                # Nodo declarativo principal (19 recursos)
+│   ├── ZedaApiTrigger.node.ts         # Trigger webhook (13 eventos)
+│   ├── types.ts                       # Interfaces TypeScript
+│   ├── resources/                     # 19 módulos de recursos
+│   └── shared/                        # Descripciones reutilizables & transporte
+└── icons/
+    ├── zedaapi.svg                    # Tema claro
+    └── zedaapi.dark.svg               # Tema oscuro
+```
 
 ## Stack Técnico
 
