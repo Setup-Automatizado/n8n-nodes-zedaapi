@@ -1,4 +1,5 @@
 import { type INodeType, type INodeTypeDescription, NodeConnectionTypes } from 'n8n-workflow';
+import { businessDescription } from './resources/business';
 import { chatDescription } from './resources/chat';
 import { communityDescription } from './resources/community';
 import { contactDescription } from './resources/contact';
@@ -58,6 +59,7 @@ export class ZedaApi implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
+					{ name: 'Business', value: 'business' },
 					{ name: 'Chat', value: 'chat' },
 					{ name: 'Community', value: 'community' },
 					{ name: 'Contact', value: 'contact' },
@@ -86,6 +88,7 @@ export class ZedaApi implements INodeType {
 			...eventDescription,
 			...statusDescription,
 			...contactDescription,
+			...businessDescription,
 			...chatDescription,
 			...groupDescription,
 			...communityDescription,
